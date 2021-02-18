@@ -66,11 +66,11 @@ namespace Api.Controllers
             return Ok(product);
         }
         [HttpPost("create")]
-        public async Task<ActionResult> CreateProduct([FromBody] string value)
+        public async Task<ActionResult> CreateProduct([FromRoute]StringContent value)
         {
             
-            Product product = new Product();
-            product = JsonConvert.DeserializeObject<Product>(value);
+            Product product = JsonConvert.DeserializeObject<Product>(value.ToString());
+            //string message = "poop";
 
             _context.Add(product);
             _context.SaveChangesAsync();
