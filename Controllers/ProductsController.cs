@@ -36,6 +36,7 @@ namespace Api.Controllers
             foreach (var item in query)
             {
                 Product product = new Product();
+                product.Id = item.Id;
                 product.Name = item.Name;
                 product.Price = item.Price;
                 product.Weight = item.Weight;
@@ -118,6 +119,23 @@ namespace Api.Controllers
             //{
             //    return Unauthorized(new { message = "user was not found, sorry!" });
             //}
+        }
+        [HttpDelete("delete/{productid}")]
+        public async Task<ActionResult> DeleteProduct([FromRoute] string productid)
+        {
+            try
+            {
+                Product product = _context.Products.Where(x => x.Id == productid).FirstOrDefault();
+                _context.Remove(product);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
+
+            }
+            return Ok();
         }
 
 
