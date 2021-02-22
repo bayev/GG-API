@@ -65,16 +65,36 @@ namespace Api.Controllers
 
             return Ok(product);
         }
-        [HttpPost("create")]
-        public async Task<ActionResult> CreateProduct([FromRoute]StringContent value)
-        {
-            
-            Product product = JsonConvert.DeserializeObject<Product>(value.ToString());
-            //string message = "poop";
 
-            _context.Add(product);
-            _context.SaveChangesAsync();
+        [HttpPost("create")]
+        public async Task<ActionResult> CreateProduct([FromBody] PostProductModel model)
+        {
+
+            Product product = new Product();
+
+            product.Name = model.Name;
+            product.Price = Convert.ToDecimal(model.Price);  
+            product.Weight = model.Weight;
+            product.Description = model.Description;
+            // upload image the proper way
+            product.Image = model.Image;
+            product.Category = model.Category;
+            product.Stock = model.Stock;
+            product.Size = model.Size;
+            product.Brand = model.Brand;
+
+            try
+            {
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
+            }
+
             return Ok();
+
             //User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
             //var roles = await _userManager.GetRolesAsync(user);
