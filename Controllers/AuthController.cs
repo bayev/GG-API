@@ -50,6 +50,9 @@ namespace Api.Controllers
 
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes("default-key-xxxx-aaaa-qqqq-default-key-xxxx-aaaa-qqqq");
+
+                    var exp = DateTime.UtcNow.AddDays(1);
+
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
 
@@ -62,14 +65,14 @@ namespace Api.Controllers
 
 
                         }),
-                        Expires = DateTime.UtcNow.AddDays(1),
+                        Expires = exp,
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
 
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var tokenString = tokenHandler.WriteToken(token);
 
-                    return Ok(new { Token = tokenString });
+                    return Ok(new { Token = tokenString, Expires = exp});
                 }
                 else
                 {

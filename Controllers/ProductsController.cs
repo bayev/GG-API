@@ -14,7 +14,7 @@ namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProductsController : Controller
     {
         private  Context _context;
