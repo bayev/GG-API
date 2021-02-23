@@ -54,9 +54,29 @@ namespace Api.Controllers
         }
 
         [HttpPut("update/{productid}")]
-        public async Task<ActionResult> UpdateProduct([FromRoute] string productid)
+        public async Task<ActionResult> UpdateProduct([FromBody] PostProductModel model, string Productid)
         {
-            return Ok($"Hello, {productid}");
+            try
+            {
+                Product product = _context.Products.Where(x => x.Id == Productid).FirstOrDefault();
+                product.Name = model.Name;
+                product.Price = Convert.ToDecimal(model.Price);
+                product.Weight = model.Weight;
+                product.Description = model.Description;
+                // upload image the proper way
+                product.Image = model.Image;
+                product.Category = model.Category;
+                product.Stock = model.Stock;
+                product.Size = model.Size;
+                product.Brand = model.Brand;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
+            }
+            return Ok();
         }
 
         [HttpGet("get/{productid}")]
