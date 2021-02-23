@@ -14,7 +14,7 @@ namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductsController : Controller
     {
         private  Context _context;
@@ -29,7 +29,7 @@ namespace Api.Controllers
         public async Task<ActionResult> GetAllProducts()
         {
             
-            List<Product> poop = new List<Product>();
+            List<Product> listOfProducts = new List<Product>();
 
             var query = _context.Products;
 
@@ -48,9 +48,9 @@ namespace Api.Controllers
                 product.Size = item.Size;
                 product.Brand = item.Brand;
 
-                poop.Add(product);
+                listOfProducts.Add(product);
             }
-            return Ok(poop);
+            return Ok(listOfProducts);
         }
 
         [HttpPut("update/{productid}")]
