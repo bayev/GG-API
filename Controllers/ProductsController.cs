@@ -31,26 +31,37 @@ namespace Api.Controllers
             
             List<Product> listOfProducts = new List<Product>();
 
-            var query = _context.Products;
-
-            foreach (var item in query)
+            if (listOfProducts.Any())
             {
-                Product product = new Product();
-                product.Id = item.Id;
-                product.Name = item.Name;
-                product.Price = item.Price;
-                product.Weight = item.Weight;
-                product.Description = item.Description;
-                product.Image = item.Image;
-                product.Category = item.Category;
-                product.CreateDate = item.CreateDate;
-                product.Stock = item.Stock;
-                product.Size = item.Size;
-                product.Brand = item.Brand;
+                var query = _context.Products;
 
-                listOfProducts.Add(product);
+                foreach (var item in query)
+                {
+                    Product product = new Product();
+                    product.Id = item.Id;
+                    product.Name = item.Name;
+                    product.Price = item.Price;
+                    product.Weight = item.Weight;
+                    product.Description = item.Description;
+                    product.Image = item.Image;
+                    product.Category = item.Category;
+                    product.CreateDate = item.CreateDate;
+                    product.Stock = item.Stock;
+                    product.Size = item.Size;
+                    product.Brand = item.Brand;
+
+                    listOfProducts.Add(product);
+                }
+                return Ok(listOfProducts);
+
             }
-            return Ok(listOfProducts);
+            else
+            {
+                return NotFound(new { message = "Sorry, no products found" });
+            }
+
+
+            
         }
 
         [HttpPut("update/{productid}")]
@@ -97,6 +108,7 @@ namespace Api.Controllers
             product.Price = Convert.ToDecimal(model.Price);  
             product.Weight = model.Weight;
             product.Description = model.Description;
+
             // upload image the proper way
             product.Image = model.Image;
             product.Category = model.Category;

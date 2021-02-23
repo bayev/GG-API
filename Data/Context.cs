@@ -69,6 +69,14 @@ namespace Api.Data
                 // MyProperty = 13
             });
 
+
+
+
+            /// seed dummy product data
+
+
+
+
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = roleId,
