@@ -31,7 +31,7 @@ namespace Api.Controllers
             
             List<Product> listOfProducts = new List<Product>();
 
-            if (listOfProducts.Any())
+            if (!listOfProducts.Any())
             {
                 var query = _context.Products;
 
