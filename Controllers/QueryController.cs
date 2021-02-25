@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +35,44 @@ namespace Api.Controllers
             {
                 return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
             }
+        }
+        [HttpGet("all")]
+        public async Task<ActionResult> GetAllProducts()
+        {
+
+            List<Product> listOfProducts = new List<Product>();
+
+            if (!listOfProducts.Any())
+            {
+                var query = _context.Products;
+
+                foreach (var item in query)
+                {
+                    Product product = new Product();
+                    product.Id = item.Id;
+                    product.Name = item.Name;
+                    product.Price = item.Price;
+                    product.Weight = item.Weight;
+                    product.Description = item.Description;
+                    product.Image = item.Image;
+                    product.Category = item.Category;
+                    product.CreateDate = item.CreateDate;
+                    product.Stock = item.Stock;
+                    product.Size = item.Size;
+                    product.Brand = item.Brand;
+
+                    listOfProducts.Add(product);
+                }
+                return Ok(listOfProducts);
+
+            }
+            else
+            {
+                return NotFound(new { message = "Sorry, no products found" });
+            }
+
+
+
         }
     }
 }
