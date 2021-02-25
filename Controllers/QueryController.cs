@@ -1,9 +1,7 @@
 ﻿using Api.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +20,7 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("search/{queryString}")] //querystring iställer för all 
+        [HttpGet("search/{queryString}")] //querystring istället för all 
         public async Task<ActionResult> SearchProductResult([FromRoute] string queryString)
         {
             try
@@ -37,32 +35,5 @@ namespace Api.Controllers
                 return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
             }
         }
-        //private static List<(DateTime date, float avgTemp)>
-
-        //SortOnTemperature(string sensor)
-        //{
-        //    using (var db = new Library.Models.EFContext())
-        //    {
-        //        var query = db.Temperature
-        //        .Where(t => t.PositionForReading == sensor)
-        //        .GroupBy(t => t.Date.DateOfTemperature)
-        //        .Select(g => new { date = g.Key, avgTemp = g.Average(t => t.TemperatureReading) })
-        //        .OrderByDescending(x => x.avgTemp).AsEnumerable();
-
-
-
-        //        List<(DateTime, float)> resultSet = new();
-
-
-
-        //        foreach (var item in query)
-        //        {
-        //            resultSet.Add((item.date, item.avgTemp));
-        //        }
-        //        return resultSet;
-        //    }
-
-        //}
     }
-
-    }
+}
