@@ -1,5 +1,4 @@
 ﻿using Api.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -67,6 +66,15 @@ namespace Api.Controllers
             {
                 return NotFound(new { message = "Sorry, no products found" });
             }
+        }
+        [HttpGet("get/{productid}")]
+        public async Task<ActionResult> GetProduct([FromRoute] string productid)
+        {
+
+            Product product = _context.Products.Where(x => x.Id == productid).FirstOrDefault();
+
+            return Ok(product);
+
         }
     }
 }
