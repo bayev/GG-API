@@ -10,15 +10,12 @@ namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    //[Authorize]
     public class QueryController : Controller
     {
         private Context _context;
-        private readonly UserManager<User> _userManager;
-        public QueryController(Context context, UserManager<User> userManager)
+        public QueryController(Context context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         [HttpGet("search/{queryString}")] //querystring istället för all 
@@ -70,9 +67,6 @@ namespace Api.Controllers
             {
                 return NotFound(new { message = "Sorry, no products found" });
             }
-
-
-
         }
     }
 }
