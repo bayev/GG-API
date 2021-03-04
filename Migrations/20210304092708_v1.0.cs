@@ -212,17 +212,17 @@ namespace Api.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "be722376-2b57-4559-9561-629668ff205f", "root", "ROOT" });
+                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "31701683-521d-4cca-a061-63d4d4375022", "root", "ROOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "940d7f7c-ffc0-4181-adcb-b4a8c953662a", "User", "USER" });
+                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "6b59c9b4-487a-4edf-91d8-7282b0c5be51", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, "f8485b1a-0590-42e7-96b7-50ee1bc52c20", "admin@core.api", true, false, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEK5YTq6Hc5zN+M93DuXiv50+SJ14b2UqO8EZR46DIcMz89kLxqaacoGfUGFpRjHPUA==", null, false, "b10ede47-c9e9-41d3-9440-fde6675f1efe", false, "admin" });
+                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, "4d2837f2-22f7-4535-aba7-de51106fa023", "admin@core.api", true, false, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEPcSWYUC2M3vehQUi9a5XTXu17duq42BAo8tg0aVl5RJTpe8bcDVL4FCQIbtZDXy8A==", null, false, "f0f9998e-4930-45fc-a91f-f24d38f01304", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

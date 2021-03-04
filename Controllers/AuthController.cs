@@ -190,5 +190,67 @@ namespace Api.Controllers
         
         }
 
+        [HttpPost("adminregister")] 
+        public async Task<ActionResult> AdminRegister([FromBody] RegisterAdminModel model)
+        {
+            User newUser = new User()
+            {
+                Email = model.Email,
+                UserName = model.Username,
+                EmailConfirmed = false,
+            };
+
+            var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (result.Succeeded)
+            {
+                User user = await _userManager.FindByNameAsync(newUser.UserName);
+
+                if (user is not null)
+                {
+                    await _userManager.AddToRoleAsync(newUser, "root");
+
+                    UserSettings settings = new UserSettings()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        DarkMode = true,
+                        User = user
+                    };
+
+                    UserGDPR gdpr = new UserGDPR()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UseMyData = false,
+                        User = user
+                    };
+
+                    // Add it to the context
+                    _context.UserSettings.Add(settings);
+                    _context.UserGDPR.Add(gdpr);
+
+                    // Save the data
+                    _context.SaveChanges();
+
+                    return Ok(new { result = $"User {model.Username} has been created"});
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                StringBuilder errorString = new StringBuilder();
+
+                foreach (var error in result.Errors)
+                {
+                    errorString.Append(error.Description);
+                }
+                return NotFound();
+                //return Ok(new { result = $"Register Fail: {errorString.ToString()}" });
+            }
+
+        }
     }
+
 }

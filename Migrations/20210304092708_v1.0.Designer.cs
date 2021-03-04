@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210218150138_v1.0")]
+    [Migration("20210304092708_v1.0")]
     partial class v10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,15 +130,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8485b1a-0590-42e7-96b7-50ee1bc52c20",
+                            ConcurrencyStamp = "4d2837f2-22f7-4535-aba7-de51106fa023",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEK5YTq6Hc5zN+M93DuXiv50+SJ14b2UqO8EZR46DIcMz89kLxqaacoGfUGFpRjHPUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPcSWYUC2M3vehQUi9a5XTXu17duq42BAo8tg0aVl5RJTpe8bcDVL4FCQIbtZDXy8A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b10ede47-c9e9-41d3-9440-fde6675f1efe",
+                            SecurityStamp = "f0f9998e-4930-45fc-a91f-f24d38f01304",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -200,14 +200,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "be722376-2b57-4559-9561-629668ff205f",
+                            ConcurrencyStamp = "31701683-521d-4cca-a061-63d4d4375022",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "940d7f7c-ffc0-4181-adcb-b4a8c953662a",
+                            ConcurrencyStamp = "6b59c9b4-487a-4edf-91d8-7282b0c5be51",
                             Name = "User",
                             NormalizedName = "USER"
                         });
