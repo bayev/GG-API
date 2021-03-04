@@ -127,10 +127,21 @@ namespace Api.Controllers
                         UseMyData = false,
                         User = user
                     };
+                    UserInfo info = new UserInfo()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FullName = model.FullName,
+                        BillingAddress = model.BillingAddress,
+                        DefaultShippingAddress = model.DefaultShippingAddress,
+                        Country = model.Country,
+                        Phone = model.Phone,
+                        User = user
+                    };
 
                     // Add it to the context
                     _context.UserSettings.Add(settings);
                     _context.UserGDPR.Add(gdpr);
+                    _context.UserInfo.Add(info);
 
                     // Save the data
                     _context.SaveChanges();
