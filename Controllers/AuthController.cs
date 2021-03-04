@@ -262,6 +262,32 @@ namespace Api.Controllers
             }
 
         }
+        [HttpDelete("admindelete")]
+        public async Task<ActionResult> AdminDelete()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                try
+                {
+                    _context.Remove(user);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}" });
+
+                }
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
     }
 
 }
