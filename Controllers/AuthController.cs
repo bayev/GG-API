@@ -50,6 +50,9 @@ namespace Api.Controllers
 
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes("default-key-xxxx-aaaa-qqqq-default-key-xxxx-aaaa-qqqq");
+
+                    var exp = DateTime.UtcNow.AddDays(1);
+
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
 
@@ -62,14 +65,14 @@ namespace Api.Controllers
 
 
                         }),
-                        Expires = DateTime.UtcNow.AddDays(1),
+                        Expires = exp,
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
 
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var tokenString = tokenHandler.WriteToken(token);
 
-                    return Ok(new { Token = tokenString });
+                    return Ok(new { Token = tokenString, Expires = exp});
                 }
                 else
                 {
@@ -124,10 +127,21 @@ namespace Api.Controllers
                         UseMyData = false,
                         User = user
                     };
+                    UserInfo info = new UserInfo()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FullName = model.FullName,
+                        BillingAddress = model.BillingAddress,
+                        DefaultShippingAddress = model.DefaultShippingAddress,
+                        Country = model.Country,
+                        Phone = model.Phone,
+                        User = user
+                    };
 
                     // Add it to the context
                     _context.UserSettings.Add(settings);
                     _context.UserGDPR.Add(gdpr);
+                    _context.UserInfo.Add(info);
 
                     // Save the data
                     _context.SaveChanges();
@@ -187,5 +201,93 @@ namespace Api.Controllers
         
         }
 
+        [HttpPost("adminregister")] 
+        public async Task<ActionResult> AdminRegister([FromBody] RegisterAdminModel model)
+        {
+            User newUser = new User()
+            {
+                Email = model.Email,
+                UserName = model.Username,
+                EmailConfirmed = false,
+            };
+
+            var result = await _userManager.CreateAsync(newUser, model.Password);
+
+            if (result.Succeeded)
+            {
+                User user = await _userManager.FindByNameAsync(newUser.UserName);
+
+                if (user is not null)
+                {
+                    await _userManager.AddToRoleAsync(newUser, "root");
+
+                    UserSettings settings = new UserSettings()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        DarkMode = true,
+                        User = user
+                    };
+
+                    UserGDPR gdpr = new UserGDPR()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UseMyData = false,
+                        User = user
+                    };
+
+                    // Add it to the context
+                    _context.UserSettings.Add(settings);
+                    _context.UserGDPR.Add(gdpr);
+
+                    // Save the data
+                    _context.SaveChanges();
+
+                    return Ok(new { result = $"User {model.Username} has been created"});
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                StringBuilder errorString = new StringBuilder();
+
+                foreach (var error in result.Errors)
+                {
+                    errorString.Append(error.Description);
+                }
+                return NotFound();
+                //return Ok(new { result = $"Register Fail: {errorString.ToString()}" });
+            }
+
+        }
+        [HttpDelete("admindelete")]
+        public async Task<ActionResult> AdminDelete()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                try
+                {
+                    _context.Remove(user);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}" });
+
+                }
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
     }
+
 }

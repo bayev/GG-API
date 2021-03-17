@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Api
 {
-
     public static class ToolBox
     {
         public static bool IsValidEmail(string email)
