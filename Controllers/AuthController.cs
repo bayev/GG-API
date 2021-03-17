@@ -260,6 +260,14 @@ namespace Api.Controllers
                 UserName = model.Username,
                 EmailConfirmed = true,
             };
+            var UserCheck = await _userManager.FindByNameAsync(model.Username);
+            var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
+
+            if (UserCheck != null)
+                return BadRequest("Username in use");
+
+            if (UserMailCheck != null)
+                return BadRequest("E-mail in use");
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
@@ -292,7 +300,7 @@ namespace Api.Controllers
                     // Save the data
                     _context.SaveChanges();
 
-                    return Ok(new { result = $"User {model.Username} has been created"});
+                    return Ok();
                 }
                 else
                 {
