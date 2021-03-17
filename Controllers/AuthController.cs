@@ -258,7 +258,7 @@ namespace Api.Controllers
             {
                 Email = model.Email,
                 UserName = model.Username,
-                EmailConfirmed = false,
+                EmailConfirmed = true,
             };
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
