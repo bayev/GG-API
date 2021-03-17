@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210304092708_v1.0")]
+    [Migration("20210317113104_v1.0")]
     partial class v10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,8 +69,17 @@ namespace Api.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("BillingAdress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DefaultShippingAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -80,11 +89,17 @@ namespace Api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MailToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -130,15 +145,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4d2837f2-22f7-4535-aba7-de51106fa023",
+                            ConcurrencyStamp = "013c04c5-4356-4885-9104-5e67277dc1d9",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPcSWYUC2M3vehQUi9a5XTXu17duq42BAo8tg0aVl5RJTpe8bcDVL4FCQIbtZDXy8A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB+2DubCXTqubE1xTpIO/SYEBGgz8cjdB+3o4SWEH3nJPuel6V0Hl5P28WcrnYeCGQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f0f9998e-4930-45fc-a91f-f24d38f01304",
+                            SecurityStamp = "b7a57fba-4884-4c81-bcf0-afaeaac7c0e4",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -200,14 +215,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "31701683-521d-4cca-a061-63d4d4375022",
+                            ConcurrencyStamp = "3a214715-ecd8-4a88-9558-797e72db5604",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "6b59c9b4-487a-4edf-91d8-7282b0c5be51",
+                            ConcurrencyStamp = "30965080-73ba-45f1-9119-2c793bef82a2",
                             Name = "User",
                             NormalizedName = "USER"
                         });

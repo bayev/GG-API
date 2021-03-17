@@ -26,6 +26,11 @@ namespace Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingAdress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DefaultShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MailToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -212,17 +217,17 @@ namespace Api.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "31701683-521d-4cca-a061-63d4d4375022", "root", "ROOT" });
+                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "3a214715-ecd8-4a88-9558-797e72db5604", "root", "ROOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "6b59c9b4-487a-4edf-91d8-7282b0c5be51", "User", "USER" });
+                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "30965080-73ba-45f1-9119-2c793bef82a2", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, "4d2837f2-22f7-4535-aba7-de51106fa023", "admin@core.api", true, false, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEPcSWYUC2M3vehQUi9a5XTXu17duq42BAo8tg0aVl5RJTpe8bcDVL4FCQIbtZDXy8A==", null, false, "f0f9998e-4930-45fc-a91f-f24d38f01304", false, "admin" });
+                columns: new[] { "Id", "AccessFailedCount", "BillingAdress", "ConcurrencyStamp", "Country", "DefaultShippingAddress", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "MailToken", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, null, "013c04c5-4356-4885-9104-5e67277dc1d9", null, null, "admin@core.api", true, null, false, null, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEB+2DubCXTqubE1xTpIO/SYEBGgz8cjdB+3o4SWEH3nJPuel6V0Hl5P28WcrnYeCGQ==", null, false, "b7a57fba-4884-4c81-bcf0-afaeaac7c0e4", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
