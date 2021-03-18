@@ -35,11 +35,14 @@ namespace Api.Controllers
         [HttpGet("profile")]
         public async Task<ActionResult> GetProfile()
         {
+
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
             if (user != null)
             {
-                return Ok(new { result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault() });
+                return Ok(user); 
+                    //Ok(new { result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault() });
+
             }
             else
             {
@@ -68,6 +71,27 @@ namespace Api.Controllers
             {
                 return StatusCode(404, new { message = "User does not exist" });
             }
+        }
+
+        [HttpDelete("userdelete")]
+        public async Task<ActionResult> UserDelete()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+                try
+                {
+                    _context.Remove(user);
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex);
+
+                }
+                return Ok();
+
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Api.Controllers
                     var tokenString = tokenHandler.WriteToken(token);
                     var userID = user.Id;
 
-                    return Ok(new { Token = tokenString, Expires = exp, user = userID });
+                    return Ok(new { Token = tokenString, Expires = exp, userID = userID });
                 }
                 else
                 {
