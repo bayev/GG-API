@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Api.Data;
+using Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Api.Models;
-using Api.Data;
 
 namespace Api.Controllers
 {
@@ -32,16 +30,20 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("profile")]
-        public async Task<ActionResult> GetProfile()
+        [HttpGet("profile/{id}")]
+        public async Task<ActionResult> GetProfile(string Id)
         {
 
-            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            //User user1 = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            //User user2 = await _userManager.FindByEmailAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            User user = await _userManager.FindByIdAsync(Id);
+
+            //User user = user1 == null ? user2 : user1;
 
             if (user != null)
             {
-                return Ok(user); 
-                    //Ok(new { result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault() });
+                return Ok(user);
+                //Ok(new { result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault() });
 
             }
             else
@@ -79,19 +81,47 @@ namespace Api.Controllers
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
             var roles = await _userManager.GetRolesAsync(user);
 
-                try
-                {
-                    _context.Remove(user);
-                    await _context.SaveChangesAsync();
+            try
+            {
+                _context.Remove(user);
+                await _context.SaveChangesAsync();
 
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
 
-                }
+            }
+            return Ok();
+
+        }
+        [HttpPut("userupdate")]
+        public async Task<ActionResult> UserUpdate([FromBody] RegisterModel model)
+        {
+           //Måste uppdatera claims? för att kunna uppdatera ändrat Username eller lösenord. Det du har när du loggar in är det som gäller hela tiden. Session?
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if(user is not null)
+            {
+                user.UserName = model.Username;
+                user.NormalizedUserName = model.Username.ToUpper();
+                user.Email = model.Email;
+                user.NormalizedEmail = model.Email.ToUpper();
+                user.EmailConfirmed = true;
+                user.FullName = model.FullName;
+                user.BillingAdress = model.BillingAddress;
+                user.DefaultShippingAddress = model.DefaultShippingAddress;
+                user.Country = model.Country;
+                user.PhoneNumber = model.Phone;
+
+                await _context.SaveChangesAsync();
                 return Ok();
-
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
