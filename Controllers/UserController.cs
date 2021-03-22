@@ -98,11 +98,29 @@ namespace Api.Controllers
         [HttpPut("userupdate")]
         public async Task<ActionResult> UserUpdate([FromBody] RegisterModel model)
         {
-           //Måste uppdatera claims? för att kunna uppdatera ändrat Username eller lösenord. Det du har när du loggar in är det som gäller hela tiden. Session?
-            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
-            var roles = await _userManager.GetRolesAsync(user);
+            var UserCheck = await _userManager.FindByNameAsync(model.Username);
+            var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
 
-            if(user is not null)
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            User userEmail = await _userManager.FindByEmailAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email)).Value);
+
+            bool sameEmail = user.Email == model.Email ? true : false;
+            bool sameUsername = user.UserName == model.Username ? true : false;
+
+            if (!sameEmail && UserMailCheck != null)
+            {
+                return BadRequest();
+            }
+            if (!sameUsername && UserCheck != null)
+            {
+                return BadRequest();
+            }
+
+            //Måste uppdatera claims? för att kunna uppdatera ändrat Username eller lösenord. Det du har när du loggar in är det som gäller hela tiden. Session?
+            //User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            //var roles = await _userManager.GetRolesAsync(user);
+
+            if (user is not null)
             {
                 user.UserName = model.Username;
                 user.NormalizedUserName = model.Username.ToUpper();
@@ -116,7 +134,31 @@ namespace Api.Controllers
                 user.PhoneNumber = model.Phone;
 
                 await _context.SaveChangesAsync();
-                return Ok();
+
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes("default-key-xxxx-aaaa-qqqq-default-key-xxxx-aaaa-qqqq");
+
+                var exp = DateTime.UtcNow.AddDays(1);
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+
+                    // Add your claims to the JWT token
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                            new Claim(ClaimTypes.Name, model.Username),
+                            new Claim(ClaimTypes.Email, model.Email)
+
+                    }),
+                    Expires = exp,
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                return Ok(new { Token = tokenString, Expires = exp });
             }
             else
             {
