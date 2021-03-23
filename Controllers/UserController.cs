@@ -109,11 +109,11 @@ namespace Api.Controllers
 
             if (!sameEmail && UserMailCheck != null)
             {
-                return BadRequest();
+                return BadRequest("E-mail in use");
             }
             if (!sameUsername && UserCheck != null)
             {
-                return BadRequest();
+                return BadRequest("Username in use");
             }
 
             if (user is not null)
@@ -158,7 +158,7 @@ namespace Api.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Error, user not found");
             }
         }
     }

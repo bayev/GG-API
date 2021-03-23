@@ -74,8 +74,10 @@ namespace Api.Controllers
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var tokenString = tokenHandler.WriteToken(token);
                     var userID = user.Id;
+                    var roles = await _userManager.GetRolesAsync(user);
 
-                    return Ok(new { Token = tokenString, Expires = exp, userID = userID });
+
+                    return Ok(new { Token = tokenString, Expires = exp, userID = userID, Role = roles[0]});
                 }
                 else
                 {
@@ -86,6 +88,8 @@ namespace Api.Controllers
             {
                 return Ok("No such user exists");
             }
+
+
         
         }
 
