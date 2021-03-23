@@ -55,7 +55,6 @@ namespace Api.Controllers
                 }
                 if (signInResult.Succeeded)
                 {
-
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes("default-key-xxxx-aaaa-qqqq-default-key-xxxx-aaaa-qqqq");
 
@@ -63,9 +62,6 @@ namespace Api.Controllers
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
-
-
-                        // Add your claims to the JWT token
                         Subject = new ClaimsIdentity(new Claim[]
                         {
                             new Claim(ClaimTypes.Name, user.UserName),
@@ -97,8 +93,6 @@ namespace Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterModel model)
         {
-            // Always better with a global try catch
-
             User newUser = new User()
             {
                 UserName = model.Username,

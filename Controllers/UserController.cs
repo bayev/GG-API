@@ -116,10 +116,6 @@ namespace Api.Controllers
                 return BadRequest();
             }
 
-            //Måste uppdatera claims? för att kunna uppdatera ändrat Username eller lösenord. Det du har när du loggar in är det som gäller hela tiden. Session?
-            //User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
-            //var roles = await _userManager.GetRolesAsync(user);
-
             if (user is not null)
             {
                 user.UserName = model.Username;
