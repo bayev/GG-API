@@ -5,12 +5,6 @@ using System.Text;
 
 namespace Api.Data
 {
-    //public enum Cat
-    //{ 
-    //    Shirts, 
-    //    Shoes
-    //}
-
     public class Product
     {  
         [Key]
