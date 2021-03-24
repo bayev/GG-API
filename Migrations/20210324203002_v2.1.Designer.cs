@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210322130601_init")]
-    partial class init
+    [Migration("20210324203002_v2.1")]
+    partial class v21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,38 @@ namespace Api.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3");
+
+            modelBuilder.Entity("Api.Data.Cart", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Api.Data.CartToProduct", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Timestamp")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CartToProducts");
+                });
 
             modelBuilder.Entity("Api.Data.Product", b =>
                 {
@@ -145,15 +177,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d19fe725-2983-4ad4-afb9-3ba8c2377e10",
+                            ConcurrencyStamp = "72a45f5b-1c08-47ff-8b07-016f0616a4df",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF1j0Qzeq8P9FnhNHcr8kHB8IPlKtrthA3Y6pDKv7/8I5vpu8B5TYhhwPbz89sitwA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELkPI37072hJKgOCg/dR2Uga6HCF8yehwQq6E8xhJKXVmC4rfXC9phRbtmr9912QFA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8e9ab40d-f0d1-471d-b7b3-802bc2b48407",
+                            SecurityStamp = "0462e2e7-a974-4021-8928-89a866118115",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -215,14 +247,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "30f4ceab-ba68-4db3-ba39-6cc0f3f28b25",
+                            ConcurrencyStamp = "610ce9ef-4b9d-4aa4-8fee-68bc2389ef18",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "91e450de-188b-4957-8cd2-7c25f99f3ccf",
+                            ConcurrencyStamp = "7bbca554-d58e-46ec-8081-fbee2d4b2a96",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -343,6 +375,17 @@ namespace Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Api.Data.CartToProduct", b =>
+                {
+                    b.HasOne("Api.Data.Cart", "Cart")
+                        .WithMany("CartToProducts")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+                });
+
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
                 {
                     b.HasOne("Api.Data.User", "User")
@@ -414,6 +457,11 @@ namespace Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Api.Data.Cart", b =>
+                {
+                    b.Navigation("CartToProducts");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>

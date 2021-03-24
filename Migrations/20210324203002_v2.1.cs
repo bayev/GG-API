@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Api.Migrations
 {
-    public partial class init : Migration
+    public partial class v21 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,6 +49,18 @@ namespace Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,20 +226,40 @@ namespace Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "30f4ceab-ba68-4db3-ba39-6cc0f3f28b25", "root", "ROOT" });
+            migrationBuilder.CreateTable(
+                name: "CartToProducts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Timestamp = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartToProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartToProducts_Carts_Id",
+                        column: x => x.Id,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "91e450de-188b-4957-8cd2-7c25f99f3ccf", "User", "USER" });
+                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "610ce9ef-4b9d-4aa4-8fee-68bc2389ef18", "root", "ROOT" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "7bbca554-d58e-46ec-8081-fbee2d4b2a96", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BillingAdress", "ConcurrencyStamp", "Country", "DefaultShippingAddress", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "MailToken", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, null, "d19fe725-2983-4ad4-afb9-3ba8c2377e10", null, null, "admin@core.api", true, null, false, null, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEF1j0Qzeq8P9FnhNHcr8kHB8IPlKtrthA3Y6pDKv7/8I5vpu8B5TYhhwPbz89sitwA==", null, false, "8e9ab40d-f0d1-471d-b7b3-802bc2b48407", false, "admin" });
+                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, null, "72a45f5b-1c08-47ff-8b07-016f0616a4df", null, null, "admin@core.api", true, null, false, null, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAELkPI37072hJKgOCg/dR2Uga6HCF8yehwQq6E8xhJKXVmC4rfXC9phRbtmr9912QFA==", null, false, "0462e2e7-a974-4021-8928-89a866118115", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -292,6 +324,9 @@ namespace Api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CartToProducts");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
@@ -302,6 +337,9 @@ namespace Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
