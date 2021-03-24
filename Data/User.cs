@@ -12,11 +12,16 @@ namespace Api.Data
     public class User : IdentityUser
     {
         // Add custom properties to your users
+        public string FullName { get; set; }
+        public string BillingAdress { get; set; }
+        public string DefaultShippingAddress { get; set; }
+        public string Country { get; set; }
+        public string MailToken { get; set; }
 
         // Setup one to one relation
+
         public virtual UserSettings Settings { get; set; }
         public virtual UserGDPR GDPR { get; set; }
-        public virtual UserInfo Info { get; set; }
     }
 
     public class UserSettings
@@ -42,21 +47,5 @@ namespace Api.Data
         [ForeignKey("Id")]
         public virtual User User { get; set; }
     }
-    public class UserInfo
-    {
-        [Key]
-        public string Id { get; set; }
-        [PersonalData]
-        public string FullName { get; set; }
-        [PersonalData]
-        public string BillingAddress { get; set; }
-        [PersonalData]
-        public string DefaultShippingAddress { get; set; }
-        [PersonalData]
-        public string Country { get; set; }
-        [PersonalData]
-        public string Phone { get; set; }
-        [ForeignKey("Id")]
-        public virtual User User { get; set; }
-    }
+    
 }

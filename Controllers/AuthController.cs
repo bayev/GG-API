@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.Models;
 using Api.Data;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Api.Controllers
 {
@@ -25,12 +26,14 @@ namespace Api.Controllers
         private Context _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IEmailSender _sender;
 
-        public AuthController(Context context, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthController(Context context, UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender sender)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _sender = sender;
         }
 
         // Use [AllowAnonymous] for methods anyone can use, Such as login and register. 
@@ -38,16 +41,20 @@ namespace Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginModel model)
         {
-
             User user = model.User.Contains("@") ? await _userManager.FindByEmailAsync(model.User) : await _userManager.FindByNameAsync(model.User);
 
             if (user != null)
             {
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-
+                if (signInResult.IsNotAllowed)
+                {
+                    if (user.EmailConfirmed == false)
+                    {
+                        return BadRequest($"{user.Id}");
+                    }
+                }
                 if (signInResult.Succeeded)
                 {
-
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes("default-key-xxxx-aaaa-qqqq-default-key-xxxx-aaaa-qqqq");
 
@@ -55,15 +62,10 @@ namespace Api.Controllers
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
-
-
-                        // Add your claims to the JWT token
                         Subject = new ClaimsIdentity(new Claim[]
                         {
                             new Claim(ClaimTypes.Name, user.UserName),
                             new Claim(ClaimTypes.Email, user.Email)
-
-
                         }),
                         Expires = exp,
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -71,8 +73,11 @@ namespace Api.Controllers
 
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     var tokenString = tokenHandler.WriteToken(token);
+                    var userID = user.Id;
+                    var roles = await _userManager.GetRolesAsync(user);
 
-                    return Ok(new { Token = tokenString, Expires = exp});
+
+                    return Ok(new { Token = tokenString, Expires = exp, userID = userID, Role = roles[0]});
                 }
                 else
                 {
@@ -83,6 +88,8 @@ namespace Api.Controllers
             {
                 return Ok("No such user exists");
             }
+
+
         
         }
 
@@ -90,17 +97,30 @@ namespace Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterModel model)
         {
-            // Always better with a global try catch
-
             User newUser = new User()
             {
-                Email = model.Email,
                 UserName = model.Username,
-                // Its always best practice to have some form of verification. this is off for simplicity
+                Email = model.Email,
+                FullName = model.FullName,
+                BillingAdress = model.BillingAddress,
+                DefaultShippingAddress = model.DefaultShippingAddress,
+                Country = model.Country,
+                PhoneNumber = model.Phone,
+                PhoneNumberConfirmed = false,
+                MailToken = null,
                 EmailConfirmed = false,
+                // Its always best practice to have some form of verification. this is off for simplicity
                 // Set your customs
                 //MyProperty = 13
             };
+            var UserCheck = await _userManager.FindByNameAsync(model.Username);
+            var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
+
+            if (UserCheck != null)
+                return BadRequest("Username in use");
+
+            if (UserMailCheck != null)
+                return BadRequest("E-mail in use");
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
@@ -108,8 +128,6 @@ namespace Api.Controllers
             {
                 User user = await _userManager.FindByNameAsync(newUser.UserName);
 
-                if (user is not null)
-                {
                     await _userManager.AddToRoleAsync(newUser, "User");
 
                     // Remember to set your custom data and relationships here
@@ -127,44 +145,73 @@ namespace Api.Controllers
                         UseMyData = false,
                         User = user
                     };
-                    UserInfo info = new UserInfo()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        FullName = model.FullName,
-                        BillingAddress = model.BillingAddress,
-                        DefaultShippingAddress = model.DefaultShippingAddress,
-                        Country = model.Country,
-                        Phone = model.Phone,
-                        User = user
-                    };
+                    
 
                     // Add it to the context
                     _context.UserSettings.Add(settings);
                     _context.UserGDPR.Add(gdpr);
-                    _context.UserInfo.Add(info);
 
-                    // Save the data
-                    _context.SaveChanges();
+                    var userId = await _userManager.GetUserIdAsync(newUser);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
 
-                    return Ok(new { result = $"User {model.Username} has been created", Token = "xxx" });
-                }
-                else
-                {
-                    return Ok(new { message = "Registration failed for unknown reasons, please try again." });
-                }
+                    user.MailToken = token;
+                    await _context.SaveChangesAsync();
+
+                    var urlContent = Url.Content($"https://localhost:44309/auth/Mailauthentication/{userId}");
+                    var link = Url.Content("https://localhost:44384/index");
+
+                    await _sender.SendEmailAsync(newUser.Email, "Bekräfta din e-post genom att klicka på länken", "<p>Klicka här för att bekräfta din e-post</p>" + urlContent +
+                                                                "</br></br><p>Fungerar inte länken? Få ett nytt utskick genom att försöka logga in på hemsidan:</br></br>" +
+                                                                $" {link}");
+
+                    return Ok(newUser.Id);
             }
             else
             {
-                StringBuilder errorString = new StringBuilder();
+                return BadRequest("Registration failed");
+            }
+        }
+        [AllowAnonymous]
+        [HttpGet("ResendMail/{id}")]
+        public async Task<ActionResult> ResendAuthMail(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is not null)
+            {
+                var urlContent = Url.Content($"https://localhost:44309/auth/Mailauthentication/{user.Id}");
+                var link = Url.Content("https://localhost:44384/index");
 
-                foreach (var error in result.Errors)
-                {
-                    errorString.Append(error.Description);
-                }
+                await _sender.SendEmailAsync(user.Email, "Bekräfta din e-post genom att klicka på länken", "<p>Klicka här för att bekräfta din e-post</p>" + urlContent +
+                                                            "</br></br><p>Fungerar inte länken? Få ett nytt utskick genom att försöka logga in på hemsidan:</br></br>" +
+                                                            $" {link}");
+                return Redirect("https://localhost:44384/RegisterConfirmation");
+            }
+            else
+                return BadRequest("User not found. Try to create another user or contact us at ggwebbshop@gmail.com");
+        }
+        [AllowAnonymous]
+        [HttpGet("MailAuthentication/{id}")]
+        public async Task<ActionResult> AuthenticateEmail(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
 
-                return Ok(new { result =  $"Register Fail: {errorString.ToString()}"});
+            if (user == null)
+                return BadRequest("The user was not found. It might be deleted. If it's your account and you've not yet validated your e-mail by clicking the sent link for validation of the account: check your e-mail for messages that might be generated after your first attempt.");
+
+            if (user.EmailConfirmed == true)
+                return BadRequest("The account have already been activated for this user");
+
+            var result = await _userManager.ConfirmEmailAsync(user, user.MailToken);
+
+            if (result.Succeeded)
+            {
+                user.MailToken = null;
+                await _context.SaveChangesAsync();
+                return Redirect("https://localhost:44384/SuccessfulEmailConfirm");
             }
 
+            else
+                return BadRequest("Contact administrator for setting the mailauthentication manually at ggwebshop@gmail.com");
         }
 
         [AllowAnonymous]
@@ -208,8 +255,16 @@ namespace Api.Controllers
             {
                 Email = model.Email,
                 UserName = model.Username,
-                EmailConfirmed = false,
+                EmailConfirmed = true,
             };
+            var UserCheck = await _userManager.FindByNameAsync(model.Username);
+            var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
+
+            if (UserCheck != null)
+                return BadRequest("Username in use");
+
+            if (UserMailCheck != null)
+                return BadRequest("E-mail in use");
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
@@ -242,7 +297,7 @@ namespace Api.Controllers
                     // Save the data
                     _context.SaveChanges();
 
-                    return Ok(new { result = $"User {model.Username} has been created"});
+                    return Ok();
                 }
                 else
                 {

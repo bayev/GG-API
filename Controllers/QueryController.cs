@@ -60,7 +60,6 @@ namespace Api.Controllers
                     listOfProducts.Add(product);
                 }
                 return Ok(listOfProducts);
-
             }
             else
             {

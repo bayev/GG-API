@@ -67,8 +67,17 @@ namespace Api.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("BillingAdress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DefaultShippingAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -78,11 +87,17 @@ namespace Api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MailToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -128,15 +143,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d47e53c7-c554-44e4-90ea-5b0d24e3acc0",
+                            ConcurrencyStamp = "d19fe725-2983-4ad4-afb9-3ba8c2377e10",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO0SZWCgpQ8RqPxlc2Ob43rBFsU361rihWqSMKx3ed1TSqaKLkDo5nSCfzq3Nz1UDQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF1j0Qzeq8P9FnhNHcr8kHB8IPlKtrthA3Y6pDKv7/8I5vpu8B5TYhhwPbz89sitwA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d76c311e-37df-42d9-a536-152646ad48f3",
+                            SecurityStamp = "8e9ab40d-f0d1-471d-b7b3-802bc2b48407",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -153,31 +168,6 @@ namespace Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserGDPR");
-                });
-
-            modelBuilder.Entity("Api.Data.UserInfo", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BillingAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DefaultShippingAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserInfo");
                 });
 
             modelBuilder.Entity("Api.Data.UserSettings", b =>
@@ -223,14 +213,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "d6813061-11e8-4102-a14a-3da5120c544b",
+                            ConcurrencyStamp = "30f4ceab-ba68-4db3-ba39-6cc0f3f28b25",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "9c3d52e3-2610-44a0-9229-b0cf7beace4d",
+                            ConcurrencyStamp = "91e450de-188b-4957-8cd2-7c25f99f3ccf",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -362,17 +352,6 @@ namespace Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.Data.UserInfo", b =>
-                {
-                    b.HasOne("Api.Data.User", "User")
-                        .WithOne("Info")
-                        .HasForeignKey("Api.Data.UserInfo", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Api.Data.UserSettings", b =>
                 {
                     b.HasOne("Api.Data.User", "User")
@@ -438,8 +417,6 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Data.User", b =>
                 {
                     b.Navigation("GDPR");
-
-                    b.Navigation("Info");
 
                     b.Navigation("Settings");
                 });

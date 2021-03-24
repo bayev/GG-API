@@ -1,10 +1,11 @@
 using Api.Data;
+using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -94,6 +95,7 @@ namespace Api
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
+                options.SignIn.RequireConfirmedAccount = true; //DETTA
             });
 
             services.AddControllers();
@@ -101,7 +103,8 @@ namespace Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
-
+            services.AddTransient<IEmailSender, EmailSender>();  //DETTA
+            services.Configure<AuthMessageSenderOptions>(Configuration); //DETTA
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Context context)
