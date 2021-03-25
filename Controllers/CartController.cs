@@ -78,7 +78,7 @@ namespace Api.Controllers
             }
 
 
-            Cart cart = _context.Carts
+            var cart = _context.Carts
             .Where(x => x.UserId == user.Id)
             .FirstOrDefault();
 
@@ -86,27 +86,18 @@ namespace Api.Controllers
             {
                 cart = new Cart();
                 cart.UserId = user.Id;
-                //Lagt till en instansiering av av listan i Cart
-                cart.CartToProducts = new List<CartToProduct>();
                 _context.Add(cart);
 
                 await _context.SaveChangesAsync();
             }
 
-            CartToProduct c2a = new CartToProduct();
-            productInDb.Stock -= 1;
-            c2a.Amount += 1;
-
-            //Ändrat från Product till ProductId
-            //Gjort en Migration (v2.1) för att prova med string istället för datatyp Product
-            c2a.ProductId = productInDb.Id;
-
-            cart.CartToProducts.Add(c2a);
-
-            //Internal Server Error när vi försöker spara c2a i cart. 
-            //Är det för att DB används eller är det för att vi inte kan spara som vi tänker?
+            cart.Products.Add(productInDb);
             await _context.SaveChangesAsync();
 
+            var productsInCart = _context.Carts
+                .Where(p => p.Products != null)
+                .Select(p => p.Products)
+                .ToList();
 
             return Ok();
         }

@@ -10,11 +10,12 @@ namespace Api.Data
         [Key]
         public string Id { get; set; }
         public string UserId { get; set; }
-        public virtual IList<CartToProduct> CartToProducts { get; set; }
+        public virtual IList<Product> Products { get; set; }
 
         public Cart()
         {
             Id = Guid.NewGuid().ToString();
+            Products = new List<Product>();
         }
     }
 }

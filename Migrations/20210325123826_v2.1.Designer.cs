@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210324203002_v2.1")]
+    [Migration("20210325123826_v2.1")]
     partial class v21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,25 +34,6 @@ namespace Api.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("Api.Data.CartToProduct", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Timestamp")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CartToProducts");
-                });
-
             modelBuilder.Entity("Api.Data.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -60,6 +41,9 @@ namespace Api.Migrations
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
@@ -89,6 +73,8 @@ namespace Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
@@ -177,15 +163,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "72a45f5b-1c08-47ff-8b07-016f0616a4df",
+                            ConcurrencyStamp = "d63a9b58-3623-4f43-b43c-f778947a3cf9",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAELkPI37072hJKgOCg/dR2Uga6HCF8yehwQq6E8xhJKXVmC4rfXC9phRbtmr9912QFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENKWCP1AS0ZMu86d607olqysfc3AHE0OTM7B1RNOdURonVgCFpV22kv0yUFx4vF01A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0462e2e7-a974-4021-8928-89a866118115",
+                            SecurityStamp = "faf5bae9-51fd-4840-8d69-cf506146a64f",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -247,14 +233,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "610ce9ef-4b9d-4aa4-8fee-68bc2389ef18",
+                            ConcurrencyStamp = "ce8be4e6-b352-4818-8b83-89d620ff1010",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "7bbca554-d58e-46ec-8081-fbee2d4b2a96",
+                            ConcurrencyStamp = "01f44339-00ee-4e56-8767-ab947b18c379",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -375,15 +361,11 @@ namespace Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Api.Data.CartToProduct", b =>
+            modelBuilder.Entity("Api.Data.Product", b =>
                 {
-                    b.HasOne("Api.Data.Cart", "Cart")
-                        .WithMany("CartToProducts")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
+                    b.HasOne("Api.Data.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
@@ -461,7 +443,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Data.Cart", b =>
                 {
-                    b.Navigation("CartToProducts");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>
