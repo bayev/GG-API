@@ -36,6 +36,16 @@ namespace Api.Controllers
             
             if(user != null)
             {
+
+                if (cart == null)
+                {
+                    cart = new Cart();
+                    cart.UserId = user.Id;
+                    cart.CartToProducts = new List<CartToProduct>();
+                    _context.Add(cart);
+
+                    await _context.SaveChangesAsync();
+                }
                 var allC2P = _context.CartToProducts
                 .Where(x => x.Cart == cart).ToList();
 
@@ -63,10 +73,10 @@ namespace Api.Controllers
                 }
 
 
-                if (C2PList != null)
+                if (C2PList.Count != 0)
                     return Ok(C2PList);
                 else
-                    return Ok("cart empty");
+                    return BadRequest("cart empty");
             }
             else
             {
@@ -116,8 +126,8 @@ namespace Api.Controllers
 
             return Ok();
         }
-        [HttpDelete("deletefromcart")]
-        public async Task<ActionResult> DeleteFromCart([FromBody] string c2pId)
+        [HttpDelete("deletefromcart/{c2pId}")]
+        public async Task<ActionResult> DeleteFromCart([FromRoute] string c2pId)
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
