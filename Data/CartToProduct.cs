@@ -14,6 +14,8 @@ namespace Api.Data
         public int Amount { get; set; }
         public string ProductId { get; set; }
         public virtual Cart Cart { get; set; }
+
+        
         public CartToProduct()
         {
             Id = Guid.NewGuid().ToString();

@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
-    [Migration("20210325131010_v1")]
-    partial class v1
-=======
-    [Migration("20210325123826_v2.1")]
-    partial class v21
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
+    [Migration("20210325140753_v1.0")]
+    partial class v10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +34,6 @@ namespace Api.Migrations
                     b.ToTable("Carts");
                 });
 
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
             modelBuilder.Entity("Api.Data.CartToProduct", b =>
                 {
                     b.Property<string>("Id")
@@ -64,8 +58,6 @@ namespace Api.Migrations
                     b.ToTable("CartToProducts");
                 });
 
-=======
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
             modelBuilder.Entity("Api.Data.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -195,25 +187,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
-                            ConcurrencyStamp = "dd37cef0-39bc-4b0b-b8b3-ac114ff7beec",
-=======
-                            ConcurrencyStamp = "d63a9b58-3623-4f43-b43c-f778947a3cf9",
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
+                            ConcurrencyStamp = "67d7415e-d11a-42a0-965e-7eee8e1fd4ba",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
-                            PasswordHash = "AQAAAAEAACcQAAAAEFITo0cbVcmQEoSJmr+r5smh5mXJ3qesNkHKcUd+Ir3+eP559QGskf4WBpTC+4TelA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH1nTtgSKufvW2zii329vYLIJibEf19tXxfSIIKGKq2znNpEn00rVd5COjsUUsE9kA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "26e194b5-9685-42a6-aa6b-bc58e56450ee",
-=======
-                            PasswordHash = "AQAAAAEAACcQAAAAENKWCP1AS0ZMu86d607olqysfc3AHE0OTM7B1RNOdURonVgCFpV22kv0yUFx4vF01A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "faf5bae9-51fd-4840-8d69-cf506146a64f",
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
+                            SecurityStamp = "032e9659-c62c-457b-8bad-abdc909bde06",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -275,22 +257,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
-                            ConcurrencyStamp = "8d8dc724-ce5f-4107-9320-07234c1d6a15",
-=======
-                            ConcurrencyStamp = "ce8be4e6-b352-4818-8b83-89d620ff1010",
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
+                            ConcurrencyStamp = "d30782f5-8efe-4346-9502-fa6a4c352d4f",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
-                            ConcurrencyStamp = "76b008f0-86eb-4bab-a1f1-bc39adb59036",
-=======
-                            ConcurrencyStamp = "01f44339-00ee-4e56-8767-ab947b18c379",
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
+                            ConcurrencyStamp = "a1cf0d79-4045-49ac-8c2c-8fa554bae45b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -411,19 +385,20 @@ namespace Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Api.Data.Product", b =>
+            modelBuilder.Entity("Api.Data.CartToProduct", b =>
                 {
-<<<<<<< HEAD:Migrations/20210325131010_v1.Designer.cs
                     b.HasOne("Api.Data.Cart", "Cart")
-                        .WithMany("CartToProducts")
+                        .WithMany()
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
-=======
+                });
+
+            modelBuilder.Entity("Api.Data.Product", b =>
+                {
                     b.HasOne("Api.Data.Cart", null)
                         .WithMany("Products")
                         .HasForeignKey("CartId");
->>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331:Migrations/20210325123826_v2.1.Designer.cs
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>

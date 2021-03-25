@@ -100,7 +100,8 @@ namespace Api.Controllers
             _context.Add(c2a);
             await _context.SaveChangesAsync();
 
-            var allC2P = _context.CartToProducts.Where(x => x.Cart == cart).ToList();
+            var allC2P = _context.CartToProducts
+                .Where(x => x.Cart == cart).ToList();
 
             return Ok();
         }

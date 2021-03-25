@@ -22,7 +22,7 @@ namespace Api.Data
         //public DbSet<Sale> Sales { get; set; }
         public DbSet<Cart> Carts { get; set; }
         //public DbSet<Address> Addresses { get; set; }
-        //public DbSet<CartToProduct> CartToProducts { get; set; }
+        public DbSet<CartToProduct> CartToProducts { get; set; }
 
 
 
