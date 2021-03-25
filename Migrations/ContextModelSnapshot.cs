@@ -32,6 +32,7 @@ namespace Api.Migrations
                     b.ToTable("Carts");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Api.Data.CartToProduct", b =>
                 {
                     b.Property<string>("Id")
@@ -56,6 +57,8 @@ namespace Api.Migrations
                     b.ToTable("CartToProducts");
                 });
 
+=======
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
             modelBuilder.Entity("Api.Data.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -63,6 +66,9 @@ namespace Api.Migrations
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
@@ -92,6 +98,8 @@ namespace Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
@@ -180,15 +188,25 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
+<<<<<<< HEAD
                             ConcurrencyStamp = "dd37cef0-39bc-4b0b-b8b3-ac114ff7beec",
+=======
+                            ConcurrencyStamp = "d63a9b58-3623-4f43-b43c-f778947a3cf9",
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
+<<<<<<< HEAD
                             PasswordHash = "AQAAAAEAACcQAAAAEFITo0cbVcmQEoSJmr+r5smh5mXJ3qesNkHKcUd+Ir3+eP559QGskf4WBpTC+4TelA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "26e194b5-9685-42a6-aa6b-bc58e56450ee",
+=======
+                            PasswordHash = "AQAAAAEAACcQAAAAENKWCP1AS0ZMu86d607olqysfc3AHE0OTM7B1RNOdURonVgCFpV22kv0yUFx4vF01A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "faf5bae9-51fd-4840-8d69-cf506146a64f",
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -250,14 +268,22 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
+<<<<<<< HEAD
                             ConcurrencyStamp = "8d8dc724-ce5f-4107-9320-07234c1d6a15",
+=======
+                            ConcurrencyStamp = "ce8be4e6-b352-4818-8b83-89d620ff1010",
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
+<<<<<<< HEAD
                             ConcurrencyStamp = "76b008f0-86eb-4bab-a1f1-bc39adb59036",
+=======
+                            ConcurrencyStamp = "01f44339-00ee-4e56-8767-ab947b18c379",
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -378,13 +404,19 @@ namespace Api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Api.Data.CartToProduct", b =>
+            modelBuilder.Entity("Api.Data.Product", b =>
                 {
+<<<<<<< HEAD
                     b.HasOne("Api.Data.Cart", "Cart")
                         .WithMany("CartToProducts")
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
+=======
+                    b.HasOne("Api.Data.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+>>>>>>> 579e804c0c3b3b7e72b7e4a630b392ec2f42a331
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
@@ -462,7 +494,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Data.Cart", b =>
                 {
-                    b.Navigation("CartToProducts");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>
