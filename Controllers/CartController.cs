@@ -113,18 +113,30 @@ namespace Api.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            var check = _context.CartToProducts
-                    .Where(x => x.Cart.Id == cart.UserId)
-                    .Where(x => x.ProductId == productInDb.Id)
-                    .FirstOrDefault();
-            
+            //var check = _context.CartToProducts
+            //        .Where(x => x.Cart.Id == cart.UserId)
+            //        .Where(x => x.ProductId == productInDb.Id)
+            //        .FirstOrDefault();
 
-            CartToProduct c2p = new CartToProduct();
-            productInDb.Stock -= 1;
-            c2p.Amount += 1;
-            c2p.ProductId = productInDb.Id;
-            c2p.Cart = cart;
-            _context.Add(c2p);
+            var C2Pcheck = _context.CartToProducts
+                .Where(x => x.Cart == cart && x.ProductId == productInDb.Id)
+                .FirstOrDefault(); //Querien funkar nu mvh prinsen
+
+            if(C2Pcheck != null)
+            {
+                C2Pcheck.Amount += 1;
+                productInDb.Stock -= 1;
+            }
+            else
+            {
+                CartToProduct c2p = new CartToProduct();
+                productInDb.Stock -= 1;
+                c2p.Amount += 1;
+                c2p.ProductId = productInDb.Id;
+                c2p.Cart = cart;
+                _context.Add(c2p);
+            }
+
             await _context.SaveChangesAsync();
 
             var allC2P = _context.CartToProducts
@@ -143,7 +155,7 @@ namespace Api.Controllers
                 Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
                 if(c2p != null && product != null)
                 {
-                    product.Stock += 1;
+                    product.Stock += c2p.Amount; //Tar bort samtliga produkter 
 
                     _context.Remove(c2p);
                     await _context.SaveChangesAsync();
