@@ -113,6 +113,12 @@ namespace Api.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            var check = _context.CartToProducts
+                    .Where(x => x.Cart.Id == cart.UserId)
+                    .Where(x => x.ProductId == productInDb.Id)
+                    .FirstOrDefault();
+            
+
             CartToProduct c2p = new CartToProduct();
             productInDb.Stock -= 1;
             c2p.Amount += 1;
@@ -152,6 +158,42 @@ namespace Api.Controllers
             {
                 return NotFound("User not found");
             }
+        }
+        [HttpPost("updateQuantity/{c2pID}")]
+        public async Task<ActionResult> UpdateQuantity([FromRoute] string c2pId, bool quantity)
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
+            CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pId).FirstOrDefault();
+            Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
+
+            if (quantity && product.Stock !=0)
+            {
+                c2p.Amount += 1;
+                product.Stock -= 1;
+                await _context.SaveChangesAsync();
+                return Ok("Increased");
+            }
+            else
+            {
+                if (c2p.Amount == 1)
+                {
+                    product.Stock += 1;
+
+                    _context.Remove(c2p);
+                    await _context.SaveChangesAsync();
+                    return Ok("Increased");
+                }
+                else
+                {
+                    c2p.Amount -= 1;
+                    product.Stock += 1;
+                    await _context.SaveChangesAsync();
+                    return Ok("Reduced");
+                }
+            }
+
+            
         }
     }
 }
