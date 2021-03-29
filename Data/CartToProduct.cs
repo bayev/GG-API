@@ -9,14 +9,16 @@ namespace Api.Data
     public class CartToProduct
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int Timestamp { get; set; }
         public int Amount { get; set; }
-        [ForeignKey("Id")]
+        public string ProductId { get; set; }
         public virtual Cart Cart { get; set; }
+
         
-        [ForeignKey("Id")]
-        public virtual Product Product { get; set; }
-        
+        public CartToProduct()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }
