@@ -1,4 +1,5 @@
 ﻿using Api.Data;
+using Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Text.Json;
-using Api.Models;
 
 namespace Api.Controllers
 {
@@ -33,8 +32,8 @@ namespace Api.Controllers
                 .Where(x => x.UserId == user.Id)
                 .FirstOrDefault();
 
-            
-            if(user != null)
+
+            if (user != null)
             {
 
                 if (cart == null)
@@ -113,16 +112,11 @@ namespace Api.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            //var check = _context.CartToProducts
-            //        .Where(x => x.Cart.Id == cart.UserId)
-            //        .Where(x => x.ProductId == productInDb.Id)
-            //        .FirstOrDefault();
-
             var C2Pcheck = _context.CartToProducts
                 .Where(x => x.Cart == cart && x.ProductId == productInDb.Id)
-                .FirstOrDefault(); //Querien funkar nu mvh prinsen
+                .FirstOrDefault();
 
-            if(C2Pcheck != null)
+            if (C2Pcheck != null)
             {
                 C2Pcheck.Amount += 1;
                 productInDb.Stock -= 1;
@@ -149,12 +143,12 @@ namespace Api.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
-            if(user != null)
+            if (user != null)
             {
                 CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pId).FirstOrDefault();
                 Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
 
-                if(c2p != null && product != null)
+                if (c2p != null && product != null)
                 {
                     product.Stock += c2p.Amount; //Tar bort samtliga produkter 
 
@@ -186,6 +180,7 @@ namespace Api.Controllers
             CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pIdUpdate).FirstOrDefault();
             Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
 
+      
             //Vill lägga till
             if (input && product.Stock > 0)
             {
@@ -195,7 +190,7 @@ namespace Api.Controllers
                 return Ok("Increased");
             }
             //Ta bort en produkt eller hela CartToProduct(C2P).
-            else
+            else if(!input)
             {
                 if (c2p.Amount == 1)
                 {
@@ -203,7 +198,7 @@ namespace Api.Controllers
 
                     _context.Remove(c2p);
                     await _context.SaveChangesAsync();
-                    return Ok("Increased");
+                    return Ok("Deleted");
                 }
                 else
                 {
@@ -212,6 +207,10 @@ namespace Api.Controllers
                     await _context.SaveChangesAsync();
                     return Ok("Reduced");
                 }
+            }
+            else
+            {
+                return BadRequest("Not in stock");
             }
         }
     }

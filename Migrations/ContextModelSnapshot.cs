@@ -64,9 +64,6 @@ namespace Api.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CartId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
@@ -95,8 +92,6 @@ namespace Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
@@ -185,15 +180,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "67d7415e-d11a-42a0-965e-7eee8e1fd4ba",
+                            ConcurrencyStamp = "1163a8a3-a1b8-40ea-87b1-a5761516166c",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH1nTtgSKufvW2zii329vYLIJibEf19tXxfSIIKGKq2znNpEn00rVd5COjsUUsE9kA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHqRQkELkXwt4CfiYVtQIKIM+n5L9a7s5T/vof6iOUdDMFNuCLbwhuUcJZ5L45DuQw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "032e9659-c62c-457b-8bad-abdc909bde06",
+                            SecurityStamp = "521745fd-e72b-4b30-8303-cc1e082044be",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -255,14 +250,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "d30782f5-8efe-4346-9502-fa6a4c352d4f",
+                            ConcurrencyStamp = "71b59b11-d55f-4f3f-a138-fc48f1a4ac46",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "a1cf0d79-4045-49ac-8c2c-8fa554bae45b",
+                            ConcurrencyStamp = "12f25ca4-d177-4bb3-b917-93783df20915",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -386,17 +381,10 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Data.CartToProduct", b =>
                 {
                     b.HasOne("Api.Data.Cart", "Cart")
-                        .WithMany()
+                        .WithMany("CartToProducts")
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
-                });
-
-            modelBuilder.Entity("Api.Data.Product", b =>
-                {
-                    b.HasOne("Api.Data.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
@@ -474,7 +462,7 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Data.Cart", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("CartToProducts");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>
