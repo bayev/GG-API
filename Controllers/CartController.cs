@@ -153,6 +153,7 @@ namespace Api.Controllers
             {
                 CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pId).FirstOrDefault();
                 Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
+
                 if(c2p != null && product != null)
                 {
                     product.Stock += c2p.Amount; //Tar bort samtliga produkter 
@@ -171,21 +172,29 @@ namespace Api.Controllers
                 return NotFound("User not found");
             }
         }
-        [HttpPost("updateQuantity/{c2pID}")]
-        public async Task<ActionResult> UpdateQuantity([FromRoute] string c2pId, bool quantity)
+        [HttpPut("updateQuantity/{PlusMinus}/{c2pIdUpdate}")]
+        public async Task<ActionResult> UpdateQuantity([FromRoute] string PlusMinus, string c2pIdUpdate)
         {
+            bool input = PlusMinus == "true" ? true : false;
+
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
-            CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pId).FirstOrDefault();
+            Cart cart = _context.Carts
+            .Where(x => x.UserId == user.Id)
+            .FirstOrDefault();
+
+            CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pIdUpdate).FirstOrDefault();
             Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
 
-            if (quantity && product.Stock !=0)
+            //Vill lägga till
+            if (input && product.Stock > 0)
             {
                 c2p.Amount += 1;
                 product.Stock -= 1;
                 await _context.SaveChangesAsync();
                 return Ok("Increased");
             }
+            //Ta bort en produkt eller hela CartToProduct(C2P).
             else
             {
                 if (c2p.Amount == 1)
@@ -204,8 +213,6 @@ namespace Api.Controllers
                     return Ok("Reduced");
                 }
             }
-
-            
         }
     }
 }
