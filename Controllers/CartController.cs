@@ -268,7 +268,6 @@ namespace Api.Controllers
                 .Where(x => x.UserId == IdUser)
                 .OrderByDescending(x => x.OrderDate)
                 .FirstOrDefault();
-
             return Ok(order);
         }
     }

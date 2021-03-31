@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210331085619_v2")]
-    partial class v2
+    [Migration("20210331142005_v1.0")]
+    partial class v10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,15 +237,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c2edfbd0-3a73-4647-a1f4-140eb6f66cf6",
+                            ConcurrencyStamp = "b4677be6-d9f4-4ef6-a6bc-6a21ed8b4c8e",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBlGbSLqmrFOPKHm2wHg7HOI8qfF15z7balKNi88Z7AWmvDxlE92n2obe4ed4SsSgw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHTCNhk4urgHETLc/8CJQRT+pX3zImFYJuN7iwTmAsfoagTlpc0th1fYQa1VIXmwNQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bbe55a66-e56b-488a-bef9-f1688ff6d14d",
+                            SecurityStamp = "adb3ecee-db17-4e38-b0ab-85b12c17817d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -307,14 +307,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "46e00039-b667-4547-a10d-60e6473cb392",
+                            ConcurrencyStamp = "20d21143-a213-4997-ade4-816a92681dcb",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "4a16af01-d961-40b5-8f96-facd507f836e",
+                            ConcurrencyStamp = "bb969388-1845-46cb-9c34-585db8f199bb",
                             Name = "User",
                             NormalizedName = "USER"
                         });
