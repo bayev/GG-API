@@ -214,10 +214,11 @@ namespace Api.Controllers
                 return BadRequest("Not in stock");
             }
         }
-        [HttpPost("placeOrder/{paymentMethod}/{totalAmount}")]
-        public async Task<ActionResult> PlaceOrder([FromRoute] string paymentMethod, decimal totalAmount)
+        [HttpPost("placeOrder")]
+        public async Task<ActionResult> PlaceOrder([FromBody] PostOrderModel postOrderModel)
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
 
             Cart cart = _context.Carts
                 .Where(x => x.UserId == user.Id)
@@ -230,14 +231,14 @@ namespace Api.Controllers
             Order order = new Order()
             {
                 UserId = user.Id,
-                Amount = totalAmount,
+                Amount = 55,
                 OrderEmail = user.Email,
                 OrderStatus = "Plockas",
-                PaymentMethod = paymentMethod,
+                PaymentMethod = postOrderModel.paymentMethod,
                 OrderDate = DateTime.Now
             };
             _context.Add(order);
-
+            
             foreach (var item in c2pList)
             {
                 var product = _context.Products
@@ -251,6 +252,7 @@ namespace Api.Controllers
                     Quantity = item.Amount,
                     Price = (product.Price * item.Amount),
                 };
+                order.Amount += orderDetail.Price;
                 order.OrderDetails.Add(orderDetail);
                 _context.Add(orderDetail);
                 _context.Remove(item);

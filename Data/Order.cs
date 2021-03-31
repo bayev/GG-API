@@ -24,4 +24,11 @@ namespace Api.Data
             OrderDetails = new List<OrderDetail>();
         }
     }
+
+    public class PostOrderModel
+    {
+        public string paymentMethod { get; set; }
+        public string totalAmount { get; set; }
+    }
+
 }
