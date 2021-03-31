@@ -3,6 +3,7 @@ using Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -212,6 +213,51 @@ namespace Api.Controllers
             {
                 return BadRequest("Not in stock");
             }
+        }
+        [HttpPost("placeOrder/{paymentMethod}/{totalAmount}")]
+        public async Task<ActionResult> PlaceOrder([FromRoute] string paymentMethod, decimal totalAmount)
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
+            Cart cart = _context.Carts
+                .Where(x => x.UserId == user.Id)
+                .FirstOrDefault();
+
+            var c2pList = _context.CartToProducts
+                .Where(x => x.Cart == cart)
+                .ToList();
+
+            Order order = new Order()
+            {
+                UserId = user.Id,
+                Amount = totalAmount,
+                OrderEmail = user.Email,
+                OrderStatus = "Plockas",
+                PaymentMethod = paymentMethod,
+                OrderDate = DateTime.Now
+            };
+            _context.Add(order);
+
+            foreach (var item in c2pList)
+            {
+                var product = _context.Products
+                    .Where(x => x.Id == item.ProductId)
+                    .FirstOrDefault();
+
+                OrderDetail orderDetail = new OrderDetail()
+                {
+                    OrderId = order.Id,
+                    ProductName = product.Name,
+                    Quantity = item.Amount,
+                    Price = (product.Price * item.Amount),
+                };
+                order.OrderDetails.Add(orderDetail);
+                _context.Add(orderDetail);
+                _context.Remove(item);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok("Order Placed");
         }
     }
 }

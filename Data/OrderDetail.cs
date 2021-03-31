@@ -6,8 +6,8 @@ namespace Api.Data
 {
     public class OrderDetail
     {
-        public int Id { get; set; }
-        public int OrderId { get; set; }
+        public string Id { get; set; }
+        public string OrderId { get; set; }
         public string ProductName { get; set; }
         //public int AddressId { get; set; }
         public int Quantity { get; set; }
@@ -15,7 +15,12 @@ namespace Api.Data
         public string ProductImgUrl { get; set; }
 
         public Order Order { get; set; }
-        public Address Addresses { get; set; }
+        //public Address Addresses { get; set; }
+
+        public OrderDetail()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
 
     }
 }
