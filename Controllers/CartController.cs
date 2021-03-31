@@ -261,5 +261,15 @@ namespace Api.Controllers
             await _context.SaveChangesAsync();
             return Ok("Order Placed");
         }
+        [HttpGet("getOrder/{IdUser}")]
+        public async Task<ActionResult> GetOrder([FromRoute] string IdUser)
+        {
+            var order = _context.Orders
+                .Where(x => x.UserId == IdUser)
+                .OrderByDescending(x => x.OrderDate)
+                .FirstOrDefault();
+
+            return Ok(order);
+        }
     }
 }
