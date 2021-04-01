@@ -251,6 +251,7 @@ namespace Api.Controllers
                     ProductName = product.Name,
                     Quantity = item.Amount,
                     Price = (product.Price * item.Amount),
+                    ProductImgUrl = product.Image
                 };
                 order.Amount += orderDetail.Price;
                 order.OrderDetails.Add(orderDetail);
@@ -268,7 +269,30 @@ namespace Api.Controllers
                 .Where(x => x.UserId == IdUser)
                 .OrderByDescending(x => x.OrderDate)
                 .FirstOrDefault();
+
             return Ok(order);
+        }
+        [HttpGet("getOrderTest/{IdUser}")]
+        public async Task<ActionResult> GetOrderTest([FromRoute] string IdUser)
+        {
+            var order = _context.Orders
+                .Where(x => x.UserId == IdUser)
+                .OrderByDescending(x => x.OrderDate)
+                .FirstOrDefault();
+
+            List<Product> products = new List<Product>();
+
+            foreach (var item in order.OrderDetails)
+            {
+                var product = _context.Products
+                    .Where(x => x.Name == item.ProductName)
+                    .FirstOrDefault();
+
+                products.Add(product);
+            }
+            var t = new Tuple<Order, List<Product>>(order, products);
+
+            return Ok(t);
         }
     }
 }
