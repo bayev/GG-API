@@ -241,6 +241,7 @@ namespace Api.Controllers
             
             foreach (var item in c2pList)
             {
+                
                 var product = _context.Products
                     .Where(x => x.Id == item.ProductId)
                     .FirstOrDefault();
@@ -251,7 +252,8 @@ namespace Api.Controllers
 
                 if(sales != null)
                 {
-                    sales.AmountSold++;
+                    sales.AmountSold += item.Amount;
+                    //sales.AmountSold++;
                     sales.LastSold = DateTime.Now;
                 }
                 else
@@ -259,10 +261,11 @@ namespace Api.Controllers
                     Sale sale = new Sale()
                     {
                         ProductId = product.Id,
-                        AmountSold = 1,
+                        AmountSold = item.Amount,
                         LastSold = DateTime.Now,
                         Product = product
                     };
+
                     _context.Add(sale);
                 }
 
