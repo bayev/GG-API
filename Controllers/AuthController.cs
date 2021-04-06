@@ -350,7 +350,7 @@ namespace Api.Controllers
             }
             else
             {
-                return Unauthorized(new {message = $"");
+                return Unauthorized(new { message = $"Du har inte behörighet att komma åt denna informationen" });
             }
         }
     }

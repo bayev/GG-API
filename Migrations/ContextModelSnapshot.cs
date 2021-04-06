@@ -151,6 +151,30 @@ namespace Api.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Api.Data.Sale", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AmountSold")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastSold")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Sales");
+                });
+
             modelBuilder.Entity("Api.Data.User", b =>
                 {
                     b.Property<string>("Id")
@@ -235,15 +259,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4677be6-d9f4-4ef6-a6bc-6a21ed8b4c8e",
+                            ConcurrencyStamp = "2457e96d-3de6-4a07-94ce-1e780375b9c1",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHTCNhk4urgHETLc/8CJQRT+pX3zImFYJuN7iwTmAsfoagTlpc0th1fYQa1VIXmwNQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJFKPltEPdnPEXw2MjLMn6EG0C+JjKJxGq0+pwuF1Pq42jGeUGddbiEKtsU1hc5VDw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "adb3ecee-db17-4e38-b0ab-85b12c17817d",
+                            SecurityStamp = "1620efb0-fcb3-4ed5-a21c-a508e8897073",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -305,14 +329,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "20d21143-a213-4997-ade4-816a92681dcb",
+                            ConcurrencyStamp = "9fdc5d07-a80d-4bf5-9a70-d635fea32312",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "bb969388-1845-46cb-9c34-585db8f199bb",
+                            ConcurrencyStamp = "abf7da9b-4123-490f-b139-d4685d7ebf4b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -449,6 +473,15 @@ namespace Api.Migrations
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Api.Data.Sale", b =>
+                {
+                    b.HasOne("Api.Data.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
