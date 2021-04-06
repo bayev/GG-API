@@ -19,7 +19,7 @@ namespace Api.Data
         //public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        //public DbSet<Sale> Sales { get; set; }
+        public DbSet<Sale> Sales { get; set; }
         public DbSet<Cart> Carts { get; set; }
         //public DbSet<Address> Addresses { get; set; }
         public DbSet<CartToProduct> CartToProducts { get; set; }

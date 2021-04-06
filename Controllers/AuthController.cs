@@ -88,9 +88,6 @@ namespace Api.Controllers
             {
                 return Ok("No such user exists");
             }
-
-
-        
         }
 
         [AllowAnonymous]
@@ -245,7 +242,6 @@ namespace Api.Controllers
             {
                 return Ok(new { message = "Your password does not match." });
             }
-        
         }
 
         [HttpPost("adminregister")] 
@@ -329,12 +325,10 @@ namespace Api.Controllers
                 {
                     _context.Remove(user);
                     await _context.SaveChangesAsync();
-
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}" });
-
                 }
                 return Ok();
             }
@@ -343,6 +337,21 @@ namespace Api.Controllers
                 return Unauthorized();
             }
         }
-    }
+        [HttpGet("sales")]
+        public async Task<ActionResult> GetSales()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
 
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                var sales = _context.Sales.ToList();
+                return Ok(sales);
+            }
+            else
+            {
+                return Unauthorized(new {message = $"");
+            }
+        }
+    }
 }
