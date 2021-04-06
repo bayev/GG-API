@@ -288,36 +288,15 @@ namespace Api.Controllers
         {
             var order = _context.Orders
                 .Where(x => x.UserId == IdUser)
-                .OrderByDescending(x => x.OrderDate)
+                .OrderBy(x => x.OrderDate)
                 .FirstOrDefault();
 
-            //var q1 = _context.OrderDetails
-            //    .Where(x => x.OrderId == order.Id)
-            //    .ToList();
-           
+            var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == order.Id).ToList();
+
+            order.OrderDetails = orderDetails;
+
             return Ok(order);
-        }
-        [HttpGet("getOrderTest/{IdUser}")]
-        public async Task<ActionResult> GetOrderTest([FromRoute] string IdUser)
-        {
-            var order = _context.Orders
-                .Where(x => x.UserId == IdUser)
-                .OrderByDescending(x => x.OrderDate)
-                .FirstOrDefault();
-
-            List<Product> products = new List<Product>();
-
-            foreach (var item in order.OrderDetails)
-            {
-                var product = _context.Products
-                    .Where(x => x.Name == item.ProductName)
-                    .FirstOrDefault();
-
-                products.Add(product);
-            }
-            var t = new Tuple<Order, List<Product>>(order, products);
-
-            return Ok(t);
         }
     }
 }

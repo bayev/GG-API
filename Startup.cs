@@ -35,7 +35,9 @@ namespace Api
 
             // you should get this key from secret place instead. A config file should be enough. 
             var key = Encoding.ASCII.GetBytes(Configuration["defaults:SignatureKey"]);
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             // add and setup the authenticaion with jwt bearer default. As well as storing the key
             services.AddAuthentication(x =>
             {
