@@ -25,7 +25,26 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("all")]
+        [HttpGet("allSoldProducts")]
+        public async Task<ActionResult> GetAllSoldProducts()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                var allSold = _context.Sales
+                    .Sum(x => x.AmountSold);
+
+                return Ok(allSold);
+            }
+            else
+            {
+                return Unauthorized(new { message = $"Du har inte behörighet att komma åt denna informationen" });
+            }
+        }
+
+        [HttpGet("allOrders")]
         public async Task<ActionResult> GetAllSales()
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
@@ -33,9 +52,9 @@ namespace Api.Controllers
 
             if (roles.Contains("root") || roles.Contains("admin"))
             {
-                var sales = _context.Sales.ToList();
+                var orders = _context.Orders.Count();
 
-                return Ok(sales);
+                return Ok(orders);
             }
             else
             {
@@ -48,20 +67,13 @@ namespace Api.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
             var roles = await _userManager.GetRolesAsync(user);
-            decimal total = 0;
 
             if (roles.Contains("root") || roles.Contains("admin"))
             {
                 var money = _context.Orders
-                    .Select(x => x.Amount);
+                    .Sum(x => x.Amount);
 
-                foreach (var i in money)
-                {
-                    total += i;
-                }
-                    
-
-                return Ok(total);
+                    return Ok(money);
             }
             else
             {
@@ -74,12 +86,12 @@ namespace Api.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
             var roles = await _userManager.GetRolesAsync(user);
-            int total = 0;
 
             if (roles.Contains("root") || roles.Contains("admin"))
             {
                 var members = _context.UserRoles
-                    .Where(x => x.RoleId.Contains("user")).Count();
+                    .Where(x => x.RoleId.Contains("user"))
+                    .Count();
    
                 return Ok(members);
             }
