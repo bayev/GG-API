@@ -232,6 +232,7 @@ namespace Api.Controllers
             {
                 UserId = user.Id,
                 Amount = 55,
+                ShippingAddress = postOrderModel.ShippingAddress,
                 OrderEmail = user.Email,
                 OrderStatus = "Plockas",
                 PaymentMethod = postOrderModel.paymentMethod,
@@ -274,7 +275,7 @@ namespace Api.Controllers
                     ProductName = product.Name,
                     Quantity = item.Amount,
                     Price = (product.Price * item.Amount),
-                    ProductImgUrl = product.Image
+                    ProductImgUrl = product.Image                   
                 };
                 order.Amount += orderDetail.Price;
                 order.OrderDetails.Add(orderDetail);
@@ -293,33 +294,29 @@ namespace Api.Controllers
                 .OrderByDescending(x => x.OrderDate)
                 .FirstOrDefault();
 
-            //var q1 = _context.OrderDetails
-            //    .Where(x => x.OrderId == order.Id)
-            //    .ToList();
-           
+            var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == order.Id).ToList();
+
+            order.OrderDetails = orderDetails;
+
             return Ok(order);
         }
-        [HttpGet("getOrderTest/{IdUser}")]
-        public async Task<ActionResult> GetOrderTest([FromRoute] string IdUser)
+        [HttpGet("getAllOrders/{IdUser}")]
+        public async Task<ActionResult> GetAllOrders([FromRoute] string IdUser)
         {
             var order = _context.Orders
                 .Where(x => x.UserId == IdUser)
-                .OrderByDescending(x => x.OrderDate)
-                .FirstOrDefault();
+                .OrderByDescending(x => x.OrderDate).ToList();
 
-            List<Product> products = new List<Product>();
-
-            foreach (var item in order.OrderDetails)
+            foreach (var item in order)
             {
-                var product = _context.Products
-                    .Where(x => x.Name == item.ProductName)
-                    .FirstOrDefault();
+                var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == item.Id).ToList();
 
-                products.Add(product);
+                item.OrderDetails = orderDetails;
             }
-            var t = new Tuple<Order, List<Product>>(order, products);
-
-            return Ok(t);
+            
+            return Ok(order);
         }
     }
 }

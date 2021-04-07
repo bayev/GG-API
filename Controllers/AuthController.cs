@@ -110,6 +110,10 @@ namespace Api.Controllers
                 // Set your customs
                 //MyProperty = 13
             };
+            if(newUser.UserName.Contains(' '))
+            {
+                return BadRequest("wrong username");
+            }
             var UserCheck = await _userManager.FindByNameAsync(model.Username);
             var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
 

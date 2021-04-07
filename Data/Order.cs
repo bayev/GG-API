@@ -8,6 +8,7 @@ namespace Api.Data
     {
         public string Id { get; set; }
         public string UserId { get; set; }
+        public string ShippingAddress { get; set; }
         //public int AddressId { get; set; }
         public decimal Amount { get; set; }
         public string OrderEmail { get; set; }
@@ -27,6 +28,7 @@ namespace Api.Data
 
     public class PostOrderModel
     {
+        public string ShippingAddress { get; set; }
         public string paymentMethod { get; set; }
         public string totalAmount { get; set; }
     }
