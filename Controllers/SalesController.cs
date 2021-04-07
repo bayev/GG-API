@@ -42,6 +42,52 @@ namespace Api.Controllers
                 return Unauthorized(new { message = $"Du har inte behörighet att komma åt denna informationen" });
             }
         }
+        [HttpGet("totalPrice")]
+
+        public async Task<ActionResult> GetTotalPrice()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+            decimal total = 0;
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                var money = _context.Orders
+                    .Select(x => x.Amount);
+
+                foreach (var i in money)
+                {
+                    total += i;
+                }
+                    
+
+                return Ok(total);
+            }
+            else
+            {
+                return Unauthorized(new { message = $"Du har inte behörighet att komma åt denna informationen" });
+            }
+        }
+        [HttpGet("totalMembers")]
+
+        public async Task<ActionResult> totalMembers()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+            int total = 0;
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                var members = _context.UserRoles
+                    .Where(x => x.RoleId.Contains("user")).Count();
+   
+                return Ok(members);
+            }
+            else
+            {
+                return Unauthorized(new { message = $"Du har inte behörighet att komma åt denna informationen" });
+            }
+        }
 
     }
 }
