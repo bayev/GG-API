@@ -1,8 +1,6 @@
 ﻿using Api.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -21,13 +19,45 @@ namespace Api.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet("RecommendedProducts")]
+        public async Task<ActionResult> GetProfile()
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
+            List<Product> apa = new List<Product>();
+
+            var order = _context.Orders
+                .Where(x => x.UserId == user.Id).FirstOrDefault();
+
+            var orderDetailsMattias = _context.OrderDetails
+                .Where(x => x.OrderId == order.Id).ToList();
+
+            if (user != null)
+            {
+                foreach (var item in orderDetailsMattias)
+                {
+                    var poop = _context.Products
+                        .Where(x => x.Name == item.ProductName).FirstOrDefault();
+
+                    apa.Add(poop);
+                }
+                return Ok(apa);
+            }
+            else
+            {
+                return StatusCode(404, new { message = "User does not exist" });
+            }
+        }
+
+
         [HttpGet("MostPopularProducts")]
         public async Task<ActionResult> MostPopularProducts()
         {
             var popularProducts = _context.Sales
                 .OrderByDescending(x => x.AmountSold).ToList();
-                
-            if(popularProducts.Count() >= 3)
+
+            if (popularProducts.Count() >= 3)
             {
                 var topThree = popularProducts.Take(3);
 
@@ -41,7 +71,7 @@ namespace Api.Controllers
 
                     productList.Add(product);
                 }
-                
+
 
                 return Ok(productList);
             }
