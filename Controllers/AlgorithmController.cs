@@ -25,29 +25,35 @@ namespace Api.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
-            List<Product> apa = new List<Product>();
+            List<Product> RecommendedProductsList = new List<Product>();
 
+            RecommendedProductsList =  _context.Products.ToList();
+           
             var order = _context.Orders
-                .Where(x => x.UserId == user.Id).FirstOrDefault();
-
-            var orderDetailsMattias = _context.OrderDetails
-                .Where(x => x.OrderId == order.Id).ToList();
-
-            if (user != null)
+                .Where(x => x.UserId == user.Id).ToList();
+           
+            
+            foreach (var item1 in order)
             {
-                foreach (var item in orderDetailsMattias)
+                var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == item1.Id).ToList();
+
+                if (user != null)
                 {
-                    var poop = _context.Products
-                        .Where(x => x.Name == item.ProductName).FirstOrDefault();
-
-                    apa.Add(poop);
+                    foreach (var item in orderDetails)
+                    {
+                        var usersOrderedProducts = _context.Products
+                            .Where(x => x.Name == item.ProductName).FirstOrDefault();
+                        RecommendedProductsList.Remove(usersOrderedProducts);
+                    }
                 }
-                return Ok(apa);
+                else
+                {
+                    return StatusCode(404, new { message = "User does not exist" });
+                }
             }
-            else
-            {
-                return StatusCode(404, new { message = "User does not exist" });
-            }
+            return Ok(RecommendedProductsList.Take(3));
+
         }
 
 
@@ -68,8 +74,16 @@ namespace Api.Controllers
                     var product = _context.Products
                     .Where(x => x.Id == item.ProductId)
                     .FirstOrDefault();
+                    if (product != null)
+                    {
+                        productList.Add(product);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
 
-                    productList.Add(product);
+                    
                 }
 
 
