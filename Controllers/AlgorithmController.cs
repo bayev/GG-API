@@ -20,42 +20,55 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
+
         [HttpGet("RecommendedProducts")]
-        public async Task<ActionResult> GetProfile()
+        public async Task<ActionResult> GetRecommendedProducts()
         {
-            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
-
-            List<Product> RecommendedProductsList = new List<Product>();
-
-            RecommendedProductsList =  _context.Products.ToList();
-           
-            var order = _context.Orders
-                .Where(x => x.UserId == user.Id).ToList();
-           
-            
-            foreach (var item1 in order)
+            try
             {
-                var orderDetails = _context.OrderDetails
-                .Where(x => x.OrderId == item1.Id).ToList();
+                
+                User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+                List<Product> RecommendedProductsList = new List<Product>();
+                RecommendedProductsList = _context.Products.ToList();
 
-                if (user != null)
+                var order = _context.Orders
+                    .Where(x => x.UserId == user.Id).ToList();
+
+
+                foreach (var item1 in order)
                 {
-                    foreach (var item in orderDetails)
+                    var orderDetails = _context.OrderDetails
+                    .Where(x => x.OrderId == item1.Id).ToList();
+
+                    if (user != null)
                     {
-                        var usersOrderedProducts = _context.Products
-                            .Where(x => x.Name == item.ProductName).FirstOrDefault();
-                        RecommendedProductsList.Remove(usersOrderedProducts);
+                        foreach (var item in orderDetails)
+                        {
+                            var usersOrderedProducts = _context.Products
+                                .Where(x => x.Name == item.ProductName).FirstOrDefault();
+                            RecommendedProductsList.Remove(usersOrderedProducts);
+                        }
                     }
+                    else
+                    {
+                        return StatusCode(404, new { message = "User does not exist" });
+                    }
+                }
+                if (RecommendedProductsList == null)
+                {
+                    return BadRequest();
                 }
                 else
                 {
-                    return StatusCode(404, new { message = "User does not exist" });
+                    return Ok(RecommendedProductsList.Take(3));
                 }
             }
-            return Ok(RecommendedProductsList.Take(3));
-
+            catch (System.Exception)
+            {
+                var deafultProducts = _context.Products.ToList();
+                return Ok(deafultProducts.Take(3));
+            }
         }
-
 
         [HttpGet("MostPopularProducts")]
         public async Task<ActionResult> MostPopularProducts()
@@ -66,7 +79,6 @@ namespace Api.Controllers
             if (popularProducts.Count() >= 3)
             {
                 var topThree = popularProducts.Take(3);
-
                 var productList = new List<Product>();
 
                 foreach (var item in topThree)
@@ -83,7 +95,7 @@ namespace Api.Controllers
                         return BadRequest();
                     }
 
-                    
+
                 }
 
 
