@@ -4,14 +4,16 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210409073530_v1.0")]
+    partial class v10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +80,6 @@ namespace Api.Migrations
 
                     b.Property<string>("ShippingAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("ShippingFee")
-                        .HasColumnType("float");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -265,15 +264,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2643f7b6-09d1-4d9c-b2bf-757c5cf30c93",
+                            ConcurrencyStamp = "50a675ff-075d-4f2a-bb21-8bb26164dc27",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFWhBzTF/2Uh36UOAusjE/oRkrMX60rFwmb4Iw/J9NLAkRDKBmWcRXFWPCoE9MVcpQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIcBNffh9GY9n6mCA00ea7dXDlcLvAAUnbhc10eux3kgIPasNnD2RHm3wZalJGzjew==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "189afbe7-a767-4e2c-aaea-53b44ad5c092",
+                            SecurityStamp = "6cbe54ed-eed2-4644-a95b-54608c7618fc",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -335,14 +334,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "8b060d67-1c7c-499f-a23f-769908dc066f",
+                            ConcurrencyStamp = "8d787dd3-e3ee-4653-9846-0d4c303b21c9",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "8fe1579a-bbf0-47b1-9fd2-39b23f22ab86",
+                            ConcurrencyStamp = "a3fdeb8a-cf7b-480d-b387-9c3f2b89ca64",
                             Name = "User",
                             NormalizedName = "USER"
                         });

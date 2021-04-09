@@ -231,15 +231,15 @@ namespace Api.Controllers
             Order order = new Order()
             {
                 UserId = user.Id,
-                Amount = 55,
+                ShippingFee = Convert.ToDouble(postOrderModel.shippingFee),
                 ShippingAddress = postOrderModel.ShippingAddress,
                 OrderEmail = user.Email,
                 OrderStatus = "Plockas",
                 PaymentMethod = postOrderModel.paymentMethod,
-                OrderDate = DateTime.Now
+                OrderDate = DateTime.Now,
             };
             _context.Add(order);
-            
+            order.Amount += Convert.ToDecimal(postOrderModel.shippingFee);
             foreach (var item in c2pList)
             {
                 
@@ -278,6 +278,7 @@ namespace Api.Controllers
                     ProductImgUrl = product.Image                   
                 };
                 order.Amount += orderDetail.Price;
+               
                 order.OrderDetails.Add(orderDetail);
                 _context.Add(orderDetail);
                 _context.Remove(item);

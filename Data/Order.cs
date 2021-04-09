@@ -15,6 +15,7 @@ namespace Api.Data
         public DateTime OrderDate { get; set; }
         public string OrderStatus { get; set; }
         public string PaymentMethod { get; set; }
+        public double ShippingFee { get; set; }
 
         public IList<OrderDetail> OrderDetails { get; set; }
         //public Address Addresses { get; set; }
@@ -31,6 +32,7 @@ namespace Api.Data
         public string ShippingAddress { get; set; }
         public string paymentMethod { get; set; }
         public string totalAmount { get; set; }
+        public string shippingFee { get; set; }
     }
 
 }
