@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210325140753_v1.0")]
-    partial class v10
+    [Migration("20210409095516_v1.1")]
+    partial class v11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,67 @@ namespace Api.Migrations
                     b.ToTable("CartToProducts");
                 });
 
+            modelBuilder.Entity("Api.Data.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ShippingFee")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Api.Data.OrderDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("Api.Data.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -65,9 +126,6 @@ namespace Api.Migrations
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CartId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
@@ -98,9 +156,31 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Api.Data.Sale", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AmountSold")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastSold")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>
@@ -187,15 +267,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "67d7415e-d11a-42a0-965e-7eee8e1fd4ba",
+                            ConcurrencyStamp = "2643f7b6-09d1-4d9c-b2bf-757c5cf30c93",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH1nTtgSKufvW2zii329vYLIJibEf19tXxfSIIKGKq2znNpEn00rVd5COjsUUsE9kA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFWhBzTF/2Uh36UOAusjE/oRkrMX60rFwmb4Iw/J9NLAkRDKBmWcRXFWPCoE9MVcpQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "032e9659-c62c-457b-8bad-abdc909bde06",
+                            SecurityStamp = "189afbe7-a767-4e2c-aaea-53b44ad5c092",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -257,14 +337,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "d30782f5-8efe-4346-9502-fa6a4c352d4f",
+                            ConcurrencyStamp = "8b060d67-1c7c-499f-a23f-769908dc066f",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "a1cf0d79-4045-49ac-8c2c-8fa554bae45b",
+                            ConcurrencyStamp = "8fe1579a-bbf0-47b1-9fd2-39b23f22ab86",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -388,17 +468,28 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Data.CartToProduct", b =>
                 {
                     b.HasOne("Api.Data.Cart", "Cart")
-                        .WithMany()
+                        .WithMany("CartToProducts")
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
                 });
 
-            modelBuilder.Entity("Api.Data.Product", b =>
+            modelBuilder.Entity("Api.Data.OrderDetail", b =>
                 {
-                    b.HasOne("Api.Data.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
+                    b.HasOne("Api.Data.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Api.Data.Sale", b =>
+                {
+                    b.HasOne("Api.Data.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Api.Data.UserGDPR", b =>
@@ -476,7 +567,12 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Data.Cart", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("CartToProducts");
+                });
+
+            modelBuilder.Entity("Api.Data.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("Api.Data.User", b =>

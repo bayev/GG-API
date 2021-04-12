@@ -88,9 +88,6 @@ namespace Api.Controllers
             {
                 return Ok("No such user exists");
             }
-
-
-        
         }
 
         [AllowAnonymous]
@@ -113,6 +110,10 @@ namespace Api.Controllers
                 // Set your customs
                 //MyProperty = 13
             };
+            if(newUser.UserName.Contains(' '))
+            {
+                return BadRequest("wrong username");
+            }
             var UserCheck = await _userManager.FindByNameAsync(model.Username);
             var UserMailCheck = await _userManager.FindByEmailAsync(model.Email);
 
@@ -245,7 +246,6 @@ namespace Api.Controllers
             {
                 return Ok(new { message = "Your password does not match." });
             }
-        
         }
 
         [HttpPost("adminregister")] 
@@ -329,12 +329,10 @@ namespace Api.Controllers
                 {
                     _context.Remove(user);
                     await _context.SaveChangesAsync();
-
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}" });
-
                 }
                 return Ok();
             }
@@ -343,6 +341,6 @@ namespace Api.Controllers
                 return Unauthorized();
             }
         }
+        
     }
-
 }

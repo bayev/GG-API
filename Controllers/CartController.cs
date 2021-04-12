@@ -1,13 +1,13 @@
 ﻿using Api.Data;
+using Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Text.Json;
-using Api.Models;
 
 namespace Api.Controllers
 {
@@ -33,8 +33,8 @@ namespace Api.Controllers
                 .Where(x => x.UserId == user.Id)
                 .FirstOrDefault();
 
-            
-            if(user != null)
+
+            if (user != null)
             {
 
                 if (cart == null)
@@ -113,12 +113,25 @@ namespace Api.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            CartToProduct c2p = new CartToProduct();
-            productInDb.Stock -= 1;
-            c2p.Amount += 1;
-            c2p.ProductId = productInDb.Id;
-            c2p.Cart = cart;
-            _context.Add(c2p);
+            var C2Pcheck = _context.CartToProducts
+                .Where(x => x.Cart == cart && x.ProductId == productInDb.Id)
+                .FirstOrDefault();
+
+            if (C2Pcheck != null)
+            {
+                C2Pcheck.Amount += 1;
+                productInDb.Stock -= 1;
+            }
+            else
+            {
+                CartToProduct c2p = new CartToProduct();
+                productInDb.Stock -= 1;
+                c2p.Amount += 1;
+                c2p.ProductId = productInDb.Id;
+                c2p.Cart = cart;
+                _context.Add(c2p);
+            }
+
             await _context.SaveChangesAsync();
 
             var allC2P = _context.CartToProducts
@@ -131,13 +144,14 @@ namespace Api.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
-            if(user != null)
+            if (user != null)
             {
                 CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pId).FirstOrDefault();
                 Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
-                if(c2p != null && product != null)
+
+                if (c2p != null && product != null)
                 {
-                    product.Stock += 1;
+                    product.Stock += c2p.Amount; //Tar bort samtliga produkter 
 
                     _context.Remove(c2p);
                     await _context.SaveChangesAsync();
@@ -152,6 +166,158 @@ namespace Api.Controllers
             {
                 return NotFound("User not found");
             }
+        }
+        [HttpPut("updateQuantity/{PlusMinus}/{c2pIdUpdate}")]
+        public async Task<ActionResult> UpdateQuantity([FromRoute] string PlusMinus, string c2pIdUpdate)
+        {
+            bool input = PlusMinus == "true" ? true : false;
+
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
+            Cart cart = _context.Carts
+            .Where(x => x.UserId == user.Id)
+            .FirstOrDefault();
+
+            CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pIdUpdate).FirstOrDefault();
+            Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
+
+      
+            //Vill lägga till
+            if (input && product.Stock > 0)
+            {
+                c2p.Amount += 1;
+                product.Stock -= 1;
+                await _context.SaveChangesAsync();
+                return Ok("Increased");
+            }
+            //Ta bort en produkt eller hela CartToProduct(C2P).
+            else if(!input)
+            {
+                if (c2p.Amount == 1)
+                {
+                    product.Stock += 1;
+
+                    _context.Remove(c2p);
+                    await _context.SaveChangesAsync();
+                    return Ok("Deleted");
+                }
+                else
+                {
+                    c2p.Amount -= 1;
+                    product.Stock += 1;
+                    await _context.SaveChangesAsync();
+                    return Ok("Reduced");
+                }
+            }
+            else
+            {
+                return BadRequest("Not in stock");
+            }
+        }
+        [HttpPost("placeOrder")]
+        public async Task<ActionResult> PlaceOrder([FromBody] PostOrderModel postOrderModel)
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+
+
+            Cart cart = _context.Carts
+                .Where(x => x.UserId == user.Id)
+                .FirstOrDefault();
+
+            var c2pList = _context.CartToProducts
+                .Where(x => x.Cart == cart)
+                .ToList();
+
+            Order order = new Order()
+            {
+                UserId = user.Id,
+                ShippingFee = Convert.ToDouble(postOrderModel.shippingFee),
+                ShippingAddress = postOrderModel.ShippingAddress,
+                OrderEmail = user.Email,
+                OrderStatus = "Plockas",
+                PaymentMethod = postOrderModel.paymentMethod,
+                OrderDate = DateTime.Now,
+            };
+            _context.Add(order);
+            order.Amount += Convert.ToDecimal(postOrderModel.shippingFee);
+            foreach (var item in c2pList)
+            {
+                
+                var product = _context.Products
+                    .Where(x => x.Id == item.ProductId)
+                    .FirstOrDefault();
+
+                var sales = _context.Sales
+                    .Where(x => x.Product == product)
+                    .FirstOrDefault();
+
+                if(sales != null)
+                {
+                    sales.AmountSold += item.Amount;
+                    sales.LastSold = DateTime.Now;
+                }
+                else
+                {
+                    Sale sale = new Sale()
+                    {
+                        ProductId = product.Id,
+                        AmountSold = item.Amount,
+                        LastSold = DateTime.Now,
+                        Product = product
+                    };
+
+                    _context.Add(sale);
+                }
+
+                OrderDetail orderDetail = new OrderDetail()
+                {
+                    OrderId = order.Id,
+                    ProductName = product.Name,
+                    Quantity = item.Amount,
+                    Price = (product.Price * item.Amount),
+                    ProductImgUrl = product.Image                   
+                };
+                order.Amount += orderDetail.Price;
+               
+                order.OrderDetails.Add(orderDetail);
+                _context.Add(orderDetail);
+                _context.Remove(item);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok("Order Placed");
+        }
+        [HttpGet("getOrder/{IdUser}")]
+        public async Task<ActionResult> GetOrder([FromRoute] string IdUser)
+        {
+            var order = _context.Orders
+                .Where(x => x.UserId == IdUser)
+                .OrderByDescending(x => x.OrderDate)
+                .FirstOrDefault();
+
+            var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == order.Id).ToList();
+
+            order.OrderDetails = orderDetails;
+
+            return Ok(order);
+        }
+        [HttpGet("getAllOrders/{IdUser}")]
+        public async Task<ActionResult> GetAllOrders([FromRoute] string IdUser)
+        {
+            var order = _context.Orders
+                .Where(x => x.UserId == IdUser)
+                .OrderByDescending(x => x.OrderDate).ToList();
+
+            foreach (var item in order)
+            {
+                var orderDetails = _context.OrderDetails
+                .Where(x => x.OrderId == item.Id).ToList();
+
+                item.OrderDetails = orderDetails;
+            }
+            
+            return Ok(order);
         }
     }
 }
