@@ -1,6 +1,7 @@
 ﻿using Api.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -126,7 +127,20 @@ namespace Api.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("category/{queryString}")] //querystring istället för all 
+        public async Task<ActionResult> SearchProductResult([FromRoute] string queryString)
+        {
+            try
+            {
+                var categoryResult = _context.Products
+                .Where(x => x.Category.Contains(queryString)).ToList();
 
-
+                return Ok(categoryResult);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
+            }
+        }
     }
 }
