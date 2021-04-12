@@ -22,10 +22,7 @@ namespace Api.Controllers
         {
             _context = context;
             _userManager = userManager;
-
         }
-
-
 
         [HttpGet("allOrders")]
         public async Task<ActionResult> GetAllOrders([FromRoute] string IdUser)

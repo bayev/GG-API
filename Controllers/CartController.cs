@@ -67,7 +67,8 @@ namespace Api.Controllers
                         Size = product.Size,
                         Brand = product.Brand,
                         Amount = c2p.Amount,
-                        c2pID = c2p.Id
+                        c2pID = c2p.Id,
+                        Discount = product.Discount
                     };
                     C2PList.Add(c2aRM);
                 }

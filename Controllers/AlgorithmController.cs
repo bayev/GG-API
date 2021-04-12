@@ -20,7 +20,6 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
-
         [HttpGet("RecommendedProducts")]
         public async Task<ActionResult> GetRecommendedProducts()
         {

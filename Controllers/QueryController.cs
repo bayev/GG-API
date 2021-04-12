@@ -56,6 +56,7 @@ namespace Api.Controllers
                     product.Stock = item.Stock;
                     product.Size = item.Size;
                     product.Brand = item.Brand;
+                    product.Discount = item.Discount;
 
                     listOfProducts.Add(product);
                 }

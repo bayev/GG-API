@@ -53,6 +53,7 @@ namespace Api.Controllers
                         product.Stock = item.Stock;
                         product.Size = item.Size;
                         product.Brand = item.Brand;
+                        product.Discount = item.Discount;
 
                         listOfProducts.Add(product);
                     }
@@ -87,6 +88,7 @@ namespace Api.Controllers
                     product.Stock = model.Stock;
                     product.Size = model.Size;
                     product.Brand = model.Brand;
+                    product.Discount = model.Discount;
 
                     await _context.SaveChangesAsync();
                     return Ok();
