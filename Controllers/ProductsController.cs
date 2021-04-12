@@ -89,6 +89,7 @@ namespace Api.Controllers
                     product.Size = model.Size;
                     product.Brand = model.Brand;
                     product.Discount = model.Discount;
+                    product.Highlighted = model.Highlighted;
 
                     await _context.SaveChangesAsync();
                     return Ok();
@@ -139,6 +140,7 @@ namespace Api.Controllers
                 product.Stock = model.Stock;
                 product.Size = model.Size;
                 product.Brand = model.Brand;
+                product.Highlighted = model.Highlighted;
 
                 try
                 {

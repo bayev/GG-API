@@ -125,6 +125,23 @@ namespace Api.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("SelectedProducts")]
+        public async Task<ActionResult> SelectedProducts()
+        {
+            var SelectedProducts = _context.Products
+                .Where(x => x.Highlighted == true).ToList();
+               
+            if(SelectedProducts.Count >= 3)
+            {
+                var threeAmigos = SelectedProducts.Take(3);
+                return Ok(threeAmigos);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+        }
 
 
     }

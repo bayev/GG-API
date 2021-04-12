@@ -22,10 +22,18 @@ namespace Api.Controllers
         {
             try
             {
-                var q1 = _context.Products
-                .Where(x => x.Category.Contains(queryString) || x.Name.Contains(queryString)).ToList();
-
-                return Ok(q1);
+                if(queryString == "rea")
+                {
+                    var q2 = _context.Products
+                        .Where(x => x.Discount != default).ToList();
+                    return Ok(q2);
+                }
+                else
+                {
+                    var q1 = _context.Products
+                    .Where(x => x.Category.Contains(queryString) || x.Name.Contains(queryString)).ToList();
+                    return Ok(q1);
+                }
             }
             catch (Exception ex)
             {
