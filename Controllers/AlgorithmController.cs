@@ -21,7 +21,6 @@ namespace Api.Controllers
             _userManager = userManager;
         }
 
-
         [HttpGet("RecommendedProducts")]
         public async Task<ActionResult> GetRecommendedProducts()
         {
@@ -127,6 +126,7 @@ namespace Api.Controllers
                 return NotFound();
             }
         }
+        
         [HttpGet("category/{queryString}")] //querystring istället för all 
         public async Task<ActionResult> SearchProductResult([FromRoute] string queryString)
         {
@@ -141,6 +141,23 @@ namespace Api.Controllers
             {
                 return BadRequest(new { message = $"Sorry, something happend. {ex.ToString()}" });
             }
+        }
+        [HttpGet("SelectedProducts")]
+        public async Task<ActionResult> SelectedProducts()
+        {
+            var SelectedProducts = _context.Products
+                .Where(x => x.Highlighted == true).ToList();
+               
+            if(SelectedProducts.Count >= 3)
+            {
+                var threeAmigos = SelectedProducts.Take(3);
+                return Ok(threeAmigos);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }

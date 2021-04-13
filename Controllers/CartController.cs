@@ -67,7 +67,8 @@ namespace Api.Controllers
                         Size = product.Size,
                         Brand = product.Brand,
                         Amount = c2p.Amount,
-                        c2pID = c2p.Id
+                        c2pID = c2p.Id,
+                        Discount = product.Discount
                     };
                     C2PList.Add(c2aRM);
                 }
@@ -268,15 +269,19 @@ namespace Api.Controllers
 
                     _context.Add(sale);
                 }
+                
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.OrderId = order.Id;
+                orderDetail.ProductName = product.Name;
+                orderDetail.Quantity = item.Amount;
+                orderDetail.ProductImgUrl = product.Image;
 
-                OrderDetail orderDetail = new OrderDetail()
-                {
-                    OrderId = order.Id,
-                    ProductName = product.Name,
-                    Quantity = item.Amount,
-                    Price = (product.Price * item.Amount),
-                    ProductImgUrl = product.Image                   
-                };
+                bool discounted = product.Discount != default ? true : false;
+                if (discounted)
+                    orderDetail.Price = Math.Round(product.Price - (product.Price * (product.Discount / 100))) * item.Amount;
+                else
+                    orderDetail.Price = (product.Price * item.Amount);
+                
                 order.Amount += orderDetail.Price;
                
                 order.OrderDetails.Add(orderDetail);

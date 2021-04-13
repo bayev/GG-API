@@ -17,9 +17,10 @@ namespace Api.Models
         public DateTime CreateDate { get; set; }
         public string Size { get; set; }
         public string Brand { get; set; }
-    
+        public decimal Discount { get; set; }
+
         //////////////////////////////////
-       
+
         public int Amount { get; set; }
         public string c2pID { get; set; }
     }

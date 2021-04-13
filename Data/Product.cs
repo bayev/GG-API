@@ -19,6 +19,8 @@ namespace Api.Data
         public int Stock { get; set; }
         public string Size { get; set; }
         public string Brand { get; set; }
+        public decimal Discount { get; set; }
+        public bool Highlighted { get; set; }
 
         public Product()
         {
@@ -43,5 +45,15 @@ namespace Api.Data
         public int Stock { get; set; }
         public string Size { get; set; }
         public string Brand { get; set; }
+        public decimal Discount { get; set; }
+        public bool Highlighted { get; set; }
+
+    }
+    public class ExposedProducts
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
     }
 }
