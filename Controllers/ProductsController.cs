@@ -331,6 +331,67 @@ namespace Api.Controllers
             product9.Size = null;
             product9.Brand = "Skultuna";
 
+            Product product11 = new Product();
+            product11.Name = "Grant Cotton/Linen Trousers Navy";
+            product11.Price = 1299;
+            product11.Weight = 200;
+            product11.Description = "Byxa med side-adjusters och pressveck i en avsmalnande passform från svenska J.Lindeberg. Byxorna är tillverkade i en stretchig lin- och bomullskvalitet, perfekt för årets varmare dagar..";
+            product11.Image = "JLinderbergByxor.jpg";
+            product11.Category = "Pants";
+            product11.CreateDate = DateTime.Now;
+            product11.Stock = 10;
+            product11.Size = "32";
+            product11.Brand = "J.Linderberg";
+
+
+            Product product12 = new Product();
+            product12.Name = "Jogger Sweatpants Light Sport Heather";
+            product12.Price = 1199;
+            product12.Weight = 250;
+            product12.Description = "Mjukisbyxa med avsmalnande passform från Polo Ralph Laurens performance-kollektion. Tillverkad i en slät dubbelstickad bomullsblandning för ett mer modernt och elegant utseende..";
+            product12.Image = "RLbyxor.jpg";
+            product12.Category = "Pants";
+            product12.CreateDate = DateTime.Now;
+            product12.Stock = 10;
+            product12.Size = "L";
+            product12.Brand = "Polo Ralph Lauren";
+
+            Product product13 = new Product();
+            product13.Name = "Danwick Side Adjusters Chino Beige";
+            product13.Price = 1199;
+            product13.Weight = 210;
+            product13.Description = "Byxor med avsmalnande passform från Oscar Jacobson. Tillverkade i bomull med stretch och side-adjusters vilket ger byxan en både uppklädd och avslappnad känsla.";
+            product13.Image = "OJbyxor.jpg";
+            product13.Category = "Pants";
+            product13.CreateDate = DateTime.Now;
+            product13.Stock = 10;
+            product13.Size = "50";
+            product13.Brand = "Oscar Jacobson";
+
+            Product product14 = new Product();
+            product14.Name = "Howard Pinstripe Drawstring Pants Dark Blue";
+            product14.Price = 1599;
+            product14.Weight = 200;
+            product14.Description = "Kritstrecksrandig drawstring-byxa från HUGO. Tillverkade i en stretchig bomullsblandning med pressveck som ger en bra balans mellan dressat och ledigt.";
+            product14.Image = "HBbyxor.jpg";
+            product14.Category = "Pants";
+            product14.CreateDate = DateTime.Now;
+            product14.Stock = 10;
+            product14.Size = "42";
+            product14.Brand = "HUGO BOSS";
+
+            Product product15 = new Product();
+            product15.Name = "502™ TAPER HI-BALL JEANS";
+            product15.Price = 699;
+            product15.Weight = 700;
+            product15.Description = "De ultimata jeansen från LEVIS för sneakers. Smala med överdriven avsmalning. Kommer upprullade och redo att visa upp dina skor. Tillverkade med +Levi's® Flex: vår mest avancerade stretchteknik, konstruerad för att ge största möjliga flex och optimal komfort.";
+            product15.Image = "LevisJeans.jpg";
+            product15.Category = "Pants";
+            product15.CreateDate = DateTime.Now;
+            product15.Stock = 10;
+            product15.Size = "34";
+            product15.Brand = "LEVIS 502™";
+
             Product az1 = new Product();
             az1.Name = "Blazor från Tommy Hilfiger";
             az1.Price = 2229;
