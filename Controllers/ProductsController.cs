@@ -586,67 +586,67 @@ namespace Api.Controllers
             matte8.Brand = "Ralph Lauren";
 
             Product az5 = new Product();
-az5.Name = "T-Shirt från Polo Ralph Lauren";
-az5.Price = 1495;
-az5.Weight = 200;
-az5.Description = "A two button placket, polo shirt constructed from highly breathable cotton mesh blend which offers a textured look, soft feel and has added stretch for functionality.";
-az5.Image = "tshirtPolo.jpg";
-az5.Category = "T-Shirt";
-az5.CreateDate = DateTime.Now;
-az5.Stock = 12;
-az5.Size = "One Size";
-az5.Brand = "Polo Ralph Lauren";
+            az5.Name = "T-Shirt från Polo Ralph Lauren";
+            az5.Price = 1495;
+            az5.Weight = 200;
+            az5.Description = "A two button placket, polo shirt constructed from highly breathable cotton mesh blend which offers a textured look, soft feel and has added stretch for functionality.";
+            az5.Image = "tshirtPolo.jpg";
+            az5.Category = "T-Shirt";
+            az5.CreateDate = DateTime.Now;
+            az5.Stock = 12;
+            az5.Size = "One Size";
+            az5.Brand = "Polo Ralph Lauren";
 
-Product az6 = new Product();
-az6.Name = "T-Shirt från Hugo Boss";
-az6.Price = 1099;
-az6.Weight = 200;
-az6.Description = "En super soft Polo tröja tillverkad i bomull i slim fit.";
-az6.Image = "tshirt2.jpg";
-az6.Category = "T-Shirt";
-az6.CreateDate = DateTime.Now;
-az6.Stock = 12;
-az6.Size = "One Size";
-az6.Brand = "Hugo Boss";
-
-
-Product az7 = new Product();
-az7.Name = "T-Shirt från Daniele Fiesoli";
-az7.Price = 1099;
-az7.Weight = 150;
-az7.Description = "En super soft T-shirt tröja tillverkad i bomull i slim fit.";
-az7.Image = "tshirt3.jpg";
-az7.Category = "T-Shirt";
-az7.CreateDate = DateTime.Now;
-az7.Stock = 12;
-az7.Size = "One Size";
-az7.Brand = "Daniele Fiesoli";
+            Product az6 = new Product();
+            az6.Name = "T-Shirt från Hugo Boss";
+            az6.Price = 1099;
+            az6.Weight = 200;
+            az6.Description = "En super soft Polo tröja tillverkad i bomull i slim fit.";
+            az6.Image = "tshirt2.jpg";
+            az6.Category = "T-Shirt";
+            az6.CreateDate = DateTime.Now;
+            az6.Stock = 12;
+            az6.Size = "One Size";
+            az6.Brand = "Hugo Boss";
 
 
-Product az7 = new Product();
-az7.Name = "T-Shirt från Stenströms";
-az7.Price = 999;
-az7.Weight = 150;
-az7.Description = "Marinblå t-shirt från Stenströms i linne.";
-az7.Image = "tshirt4.jpg";
-az7.Category = "T-Shirt";
-az7.CreateDate = DateTime.Now;
-az7.Stock = 12;
-az7.Size = "One Size";
-az7.Brand = "Stenströms";
+            Product az7 = new Product();
+            az7.Name = "T-Shirt från Daniele Fiesoli";
+            az7.Price = 1099;
+            az7.Weight = 150;
+            az7.Description = "En super soft T-shirt tröja tillverkad i bomull i slim fit.";
+            az7.Image = "tshirt3.jpg";
+            az7.Category = "T-Shirt";
+            az7.CreateDate = DateTime.Now;
+            az7.Stock = 12;
+            az7.Size = "One Size";
+            az7.Brand = "Daniele Fiesoli";
 
 
-Product az8 = new Product();
-az8.Name = "T-Shirt från Kenzo";
-az8.Price = 999;
-az8.Weight = 150;
-az8.Description = "Marinblå t-shirt från Kenzo i bomull.";
-az8.Image = "tshirt.jpg";
-az8.Category = "T-Shirt";
-az8.CreateDate = DateTime.Now;
-az8.Stock = 12;
-az8.Size = "One Size";
-az8.Brand = "Kenzo";
+            Product az7 = new Product();
+            az7.Name = "T-Shirt från Stenströms";
+            az7.Price = 999;
+            az7.Weight = 150;
+            az7.Description = "Marinblå t-shirt från Stenströms i linne.";
+            az7.Image = "tshirt4.jpg";
+            az7.Category = "T-Shirt";
+            az7.CreateDate = DateTime.Now;
+            az7.Stock = 12;
+            az7.Size = "One Size";
+            az7.Brand = "Stenströms";
+
+
+            Product az8 = new Product();
+            az8.Name = "T-Shirt från Kenzo";
+            az8.Price = 999;
+            az8.Weight = 150;
+            az8.Description = "Marinblå t-shirt från Kenzo i bomull.";
+            az8.Image = "tshirt.jpg";
+            az8.Category = "T-Shirt";
+            az8.CreateDate = DateTime.Now;
+            az8.Stock = 12;
+            az8.Size = "One Size";
+            az8.Brand = "Kenzo";
 
 
             seedList.Add(product10);
@@ -666,6 +666,10 @@ az8.Brand = "Kenzo";
             seedList.Add(az6);
             seedList.Add(az7);
             seedList.Add(az8);
+            seedList.Add(tess1);
+            seedList.Add(tess2);
+            seedList.Add(tess3);
+            seedList.Add(tess4);
 
             foreach (var item in seedList)
             {
