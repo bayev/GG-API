@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,7 +15,7 @@ namespace Api.Controllers
     [Authorize]
     public class ProductsController : Controller
     {
-        private  Context _context;
+        private Context _context;
         private readonly UserManager<User> _userManager;
         public ProductsController(Context context, UserManager<User> userManager)
         {
@@ -177,7 +175,7 @@ namespace Api.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}"});
+                    return BadRequest(new { message = $"Sorry, something happened. {ex.ToString()}" });
 
                 }
                 return Ok();
@@ -186,6 +184,39 @@ namespace Api.Controllers
             {
                 return Unauthorized();
             }
+        }
+        [AllowAnonymous]
+        [HttpGet("GGProducts")] //EXPOSED METHOD FOR OUR PRODUCTS TO BE DISPLAYED
+        public async Task<ActionResult> GGProducts()
+        {
+
+            try
+            {
+                var products = _context.Products;
+                var exposedList = new List<ExposedProducts>();
+
+                foreach (var item in products)
+                {
+                    var tempInstance = new ExposedProducts
+                    {
+                        Name = item.Name,
+                        Price = item.Price,
+                        Description = item.Description,
+                        Image = item.Image
+                    };
+                    exposedList.Add(tempInstance);
+                }
+
+                return Ok(exposedList);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Could not get our products at this moment. {ex.ToString()}" });
+
+            }
+
+
         }
         [HttpPost("seed")]
         public async void SeedDB() //ANVÄND POSTMAN FÖR ATT SEEDA DB. Method POST, använd TOKEN /products/seed
