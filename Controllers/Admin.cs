@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Api.Controllers
     {
         private Context _context;
         private readonly UserManager<User> _userManager;
-        
+
         public Admin(Context context, UserManager<User> userManager)
         {
             _context = context;
@@ -46,10 +45,10 @@ namespace Api.Controllers
             {
                 return Unauthorized();
             }
-            
+
         }
-        [HttpPost("ConfirmOrders")]
-        public async Task<ActionResult> ConfirmOrders([FromBody] PostOrderModel postOrderModel ) 
+        [HttpGet("GetOrderStatus/{orderId}")]
+        public async Task<ActionResult> GetOrderStatus([FromRoute] string orderId)
         {
             User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
             var roles = await _userManager.GetRolesAsync(user);
@@ -58,16 +57,58 @@ namespace Api.Controllers
             {
                 try
                 {
-                    var order = _context.Orders.ToList();
+                    var order = _context.Orders
+                        .Where(x => x.Id == orderId)
+                        .FirstOrDefault();
+
+
+                    var orderDetails = _context.OrderDetails
+                        .Where(x => x.OrderId == order.Id).ToList();
+
+                    order.OrderDetails = orderDetails;
+
+
                     return Ok(order);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return BadRequest();
+                    return BadRequest(ex);
+
                 }
             }
             return Ok();
         }
+
+        [HttpPut("ChangeOrderStatus/{orderId}")]
+        public async Task<ActionResult> ChangeOrderStatus([FromRoute] string orderId)
+        {
+            User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Contains("root") || roles.Contains("admin"))
+            {
+                try
+                {
+                    var order = _context.Orders
+                        .Where(x => x.Id == orderId)
+                        .FirstOrDefault();
+
+                    order.OrderStatus = "Skickad";
+                    await _context.SaveChangesAsync();
+
+                    return Ok(new { message = "Orderstatus har ändradrats till skickad!" });
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex);
+
+                }
+
+            }
+            return Ok();
+        }
     }
-    
+
+
+
 }
