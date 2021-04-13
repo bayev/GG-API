@@ -543,7 +543,7 @@ namespace Api.Controllers
             matte1.Price = 1000;
             matte1.Weight = 399;
             matte1.Description = "Tröja tillverkad i en mjuk bomullsblandning med broderad logotyp och magficka.";
-            matte1.Image = "GantBlueSweater.jpeg";
+            matte1.Image = "GantBlueSweater.jpg";
             matte1.Category = "Sweaters";
             matte1.CreateDate = DateTime.Now;
             matte1.Stock = 10;
@@ -555,7 +555,7 @@ namespace Api.Controllers
             matte2.Price = 1999;
             matte2.Weight = 399;
             matte2.Description = "Huvtröja från BOSS Athleisure. Tillverkad i en mjuk bomull- och syntetblandning med en sportig känsla, broderad logotyp på bröstet.";
-            matte2.Image = "HugoBossBlackSweater.jpeg";
+            matte2.Image = "HugoBossBlackSweater.jpg";
             matte2.Category = "Sweaters";
             matte2.CreateDate = DateTime.Now;
             matte2.Stock = 10;
@@ -567,7 +567,7 @@ namespace Api.Controllers
             matte3.Price = 1499;
             matte3.Weight = 259;
             matte3.Description = "Kabelstickad tröja med rund hals från Polo Ralph Lauren. Tillverkad i en mjuk bomullskvalitet och prydd med en broderad polospelare på vänster bröst.";
-            matte3.Image = "RalphLaurenWhiteSweater.jpeg";
+            matte3.Image = "RalphLaurenWhiteSweater.jpg";
             matte3.Category = "Sweaters";
             matte3.CreateDate = DateTime.Now;
             matte3.Stock = 10;
@@ -579,7 +579,7 @@ namespace Api.Controllers
             matte4.Price = 1699;
             matte4.Weight = 415;
             matte4.Description = "Finstickad zip-tröja med dragkedja i kragen från Morris. Tillverkad i merinoull - ett ekologiskt framtaget ullgarn med en hög komfort och mjuk känsla, producerat av Biella Yarn.";
-            matte4.Image = "MorrisNavySweater.jpeg";
+            matte4.Image = "MorrisNavySweater.jpg";
             matte4.Category = "Sweaters";
             matte4.CreateDate = DateTime.Now;
             matte4.Stock = 10;
@@ -591,7 +591,7 @@ namespace Api.Controllers
             matte5.Price = 1099;
             matte5.Weight = 369;
             matte5.Description = "Huvtröja från Calvin Klein i en kraftig bomullskvalitet med tryckt logotyp på bröstet. En avslappnad tröja med mjukt ruggad insida som bjuder på en hög komfortnivå.";
-            matte5.Image = "CkOrangeSweater.jpeg";
+            matte5.Image = "CkOrangeSweater.jpg";
             matte5.Category = "Sweaters";
             matte5.CreateDate = DateTime.Now;
             matte5.Stock = 10;
@@ -603,7 +603,7 @@ namespace Api.Controllers
             matte6.Price = 1199;
             matte6.Weight = 379;
             matte6.Description = "Huvtröja med dragkedja från Peak Performance. Tillverkad i en mjuk och slitstark bomullskvalitet, med ruggad insida för ökad komfort, samt en broderad logotyp på vänster bröst.";
-            matte6.Image = "PeakPerformanceBlackHoodie.jpeg";
+            matte6.Image = "PeakPerformanceBlackHoodie.jpg";
             matte6.Category = "Sweaters";
             matte6.CreateDate = DateTime.Now;
             matte6.Stock = 10;
@@ -615,7 +615,7 @@ namespace Api.Controllers
             matte7.Price = 1499;
             matte7.Weight = 470;
             matte7.Description = "Huvtröja från Polo Ralph Lauren. Tillverkad i en mjuk jersey av bomull och polyester med ruggad insida för ökad komfort. Den ikoniska polospelaren broderad på vänster bröst.";
-            matte7.Image = "RalphLaurenRedSweater.jpeg";
+            matte7.Image = "RalphLaurenRedSweater.jpg";
             matte7.Category = "Sweaters";
             matte7.CreateDate = DateTime.Now;
             matte7.Stock = 10;
@@ -627,7 +627,7 @@ namespace Api.Controllers
             matte8.Price = 1699;
             matte8.Weight = 359;
             matte8.Description = "Huvtröja från Polo Ralph Lauren. Ett bekvämt plagg, tillverkat i en bomull- och polyesterblandning med en mjukt uppruggad insida för ökad komfort och värme.";
-            matte8.Image = "RalphLaurenBlueLagoonSweater.jpeg";
+            matte8.Image = "RalphLaurenBlueLagoonSweater.jpg";
             matte8.Category = "Sweaters";
             matte8.CreateDate = DateTime.Now;
             matte8.Stock = 10;

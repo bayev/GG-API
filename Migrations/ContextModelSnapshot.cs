@@ -271,15 +271,15 @@ namespace Api.Migrations
                         {
                             Id = "admin-c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "344bb406-0b82-44ed-8da4-04bd0051ff2c",
+                            ConcurrencyStamp = "2e56f0f1-7d8c-4777-9087-1b516027e43f",
                             Email = "admin@core.api",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@CORE.API",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECSwYq19AOTVm1UZB0QK10qIMt2YbNGTLkBhvSOIpyD0PckrTYhQqUn02w/jpnbxtA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBNUpzs+ALuPGpBkfgCObdOSYQq/le7Ra0H5U+AeBzUwKpweGUGUh7ssLgBnt1sL6Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "70a4bd38-bfa3-477f-8455-c11fa321f160",
+                            SecurityStamp = "3cdb20fa-475c-4e46-9d4b-6c0b34f906ad",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -341,14 +341,14 @@ namespace Api.Migrations
                         new
                         {
                             Id = "root-0c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "a1ce1c8d-95fa-4bbe-8664-ad62c6287412",
+                            ConcurrencyStamp = "fda5d607-7dc5-4a7c-a989-e45f12ecffe2",
                             Name = "root",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
                             Id = "user-2c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "24c1a6e4-d536-40d1-85a6-cbfca12b850f",
+                            ConcurrencyStamp = "339e853b-9ddd-4e06-a686-5ac2828b7b83",
                             Name = "User",
                             NormalizedName = "USER"
                         });
