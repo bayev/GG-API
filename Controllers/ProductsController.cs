@@ -649,6 +649,103 @@ namespace Api.Controllers
             az9.Size = "One Size";
             az9.Brand = "Stenströms";
 
+            Product john1 = new Product();
+            john1.Name = "John Henric blå slips";
+            john1.Price = 399;
+            john1.Weight = 20;
+            john1.Description = "En enfärgad slips bör matcha resten av klädseln med tanke på färg och stil men behöver för den skull inte ha samma färg som övrig klädsel. Det viktiga är att slipsen inte skär sig mot övrig klädsel. En enfärgad slips fungerar alltid perfekt till en mörk kostym i blått eller grått, enfärgad vit eller ljusblå skjorta och vitt näsduk.";
+            john1.Image = "Blåslips.png";
+            john1.Category = "Diverse";
+            john1.CreateDate = DateTime.Now;
+            john1.Stock = 10;
+            john1.Size = null;
+            john1.Brand = "John Henric";
+
+            Product john2 = new Product();
+            john2.Name = "John Henric orange slips";
+            john2.Price = 399;
+            john2.Weight = 20;
+            john2.Description = "Orange bomullsslips från vårt egna varumärke John Henric. Slipsen är handsydd i 100% bomull och kommer i bredd 7 cm. Perfekt till kontoret eller fin middag";
+            john2.Image = "Orangeslips.png";
+            john2.Category = "Diverse";
+            john2.CreateDate = DateTime.Now;
+            john2.Stock = 10;
+            john2.Size = null;
+            john2.Brand = "John Henric";
+
+            Product john3 = new Product();
+            john3.Name = "John Henric svart slips";
+            john3.Price = 399;
+            john3.Weight = 20;
+            john3.Description = "Detta jämna svarta exemplar går att kombinera vid olika looks och ger varje outfit enkelt och snabbt och fashionabel betoning. Bär den till kontoret eller annat högtidligt evenemang.";
+            john3.Image = "svartSlips.png";
+            john3.Category = "Diverse";
+            john3.CreateDate = DateTime.Now;
+            john3.Stock = 10;
+            john3.Size = null;
+            john3.Brand = "John Henric";
+
+            Product john4 = new Product();
+            john4.Name = "John Henric brun weekendbag";
+            john4.Price = 1299;
+            john4.Weight = 200;
+            john4.Description = "Den perfekta väskan för längre resor, weekend breaks eller affärsresan. Denna weekend bag är både en rymlig och tålig läderväska. Det kastanjebruna lädret framhävs med metaldetaljer i matt guldfärg och insidan är fodrad med bomullstyg, på insidan finns mindre fack där man med fördel kan förvara mindre ägodelar.";
+            john4.Image = "brunväska.png";
+            john4.Category = "Diverse";
+            john4.CreateDate = DateTime.Now;
+            john4.Stock = 10;
+            john4.Size = null;
+            john4.Brand = "John Henric";
+
+            Product john5 = new Product();
+            john5.Name = "Moncler ryggsäck";
+            john5.Price = 1999;
+            john5.Weight = 150;
+            john5.Description = "Ryggsäck från Moncler. Ryggsäcken är tillverkad i ett slitstarkt tyg med en läcker design och stilren finish. Insidan av väskan har ett separat, vadderat fack för att tillbehör. Justerbara remmar. Graverad logga på ryggsäckens framsida. ";
+            john5.Image = "Monclerväska.png";
+            john5.Category = "Diverse";
+            john5.CreateDate = DateTime.Now;
+            john5.Stock = 10;
+            john5.Size = null;
+            john5.Brand = "Moncler";
+
+            Product john6 = new Product();
+            john6.Name = "Valentino ryggsäck";
+            john6.Price = 799;
+            john6.Weight = 100;
+            john6.Description = "Stilren ryggsäck med en enhetlig design som fungerar i alla lägen. Baksida och axelremmar vadderade för bra komfort. Ryggsäcken har ett vadderat fack som rymmer de flesta laptops.";
+            john6.Image = "ValentinoRyggsack.png";
+            john6.Category = "Diverse";
+            john6.CreateDate = DateTime.Now;
+            john6.Stock = 10;
+            john6.Size = null;
+            john6.Brand = "Valentino";
+
+            Product john7 = new Product();
+            john7.Name = "Lloyd finskor";
+            john7.Price = 999;
+            john7.Weight = 80;
+            john7.Description = "Osmond är en mycket omtyckt klassisk finsko som passar både till kostym och jeans. Ovanlädret är extra mjukt och yttersulan är gjort av en slitstark gummiblandning.";
+            john7.Image = "LloydSkorbrun.png";
+            john7.Category = "Diverse";
+            john7.CreateDate = DateTime.Now;
+            john7.Stock = 10;
+            john7.Size = "45";
+            john7.Brand = "Lloyd";
+
+            Product john8 = new Product();
+            john8.Name = "Ralph Lauren sneakers";
+            john8.Price = 1299;
+            john8.Weight = 120;
+            john8.Description = "Gant Joree sneakers i skinn. Stilrena och diskreta sneakers med snörning som går ton-i-ton och en lätt yttersula i gummi. Perfekt att matcha till jeans och chinos.";
+            john8.Image = "RalphLaurentSkor.png";
+            john8.Category = "Diverse";
+            john8.CreateDate = DateTime.Now;
+            john8.Stock = 10;
+            john8.Size = "45";
+            john8.Brand = "Ralph Lauren";
+
+
             seedList.Add(product10);
             seedList.Add(product1);
             seedList.Add(product2);
@@ -684,6 +781,14 @@ namespace Api.Controllers
             seedList.Add(product13);
             seedList.Add(product14);
             seedList.Add(product15);
+            seedList.Add(john1);
+            seedList.Add(john2);
+            seedList.Add(john3);
+            seedList.Add(john4);
+            seedList.Add(john5);
+            seedList.Add(john6);
+            seedList.Add(john7);
+            seedList.Add(john8);
 
             foreach (var item in seedList)
             {
