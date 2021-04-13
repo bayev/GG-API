@@ -229,7 +229,7 @@ namespace Api.Controllers
             product10.Weight = 400;
             product10.Description = "En stilren pullover från Morris som säkrar vardagsstilen en kall och mulen höstdag eller en sensommarkväll.";
             product10.Image = "MorrisSweater.jpg";
-            product10.Category = "Sweater";
+            product10.Category = "Sweaters";
             product10.CreateDate = DateTime.Now;
             product10.Stock = 10;
             product10.Size = "M";
@@ -241,7 +241,7 @@ namespace Api.Controllers
             product1.Weight = 425;
             product1.Description = "Grå sweater från CK, en stilren tröja som funkar både i hemmet och på stan.";
             product1.Image = "CkSweater.jpg";
-            product1.Category = "Sweater";
+            product1.Category = "Sweaters";
             product1.CreateDate = DateTime.Now;
             product1.Stock = 10;
             product1.Size = "L";
@@ -253,7 +253,7 @@ namespace Api.Controllers
             product2.Weight = 355;
             product2.Description = "Stilren, svart skjorta från RL. Bär till jeans eller kostym, inga ursäkter för att inte bära denna sköna skjorta.";
             product2.Image = "RalphLaurenShirt.jpg";
-            product2.Category = "Shirt";
+            product2.Category = "Shirts";
             product2.CreateDate = DateTime.Now;
             product2.Stock = 10;
             product2.Size = "S";
@@ -277,7 +277,7 @@ namespace Api.Controllers
             product5.Weight = 500;
             product5.Description = "Men en ryggsäck från Rains får du med dig laptop, ipad, och andra atteraljer utan att tumma på stilen. Gjord i vattentätt material så din elektronik inte blir förstörd om det skulle regna.";
             product5.Image = "RainsBackpack.jpg";
-            product5.Category = "Accessories";
+            product5.Category = "Diverse";
             product5.CreateDate = DateTime.Now;
             product5.Stock = 10;
             product5.Size = null;
@@ -289,7 +289,7 @@ namespace Api.Controllers
             product6.Weight = 500;
             product6.Description = "Med en blazer från Tiger of Sweden kan du vara säker på att du håll stilen både till fest och vardag. Gjord i kvalitetsmaterial med bekväm passform.";
             product6.Image = "TigerBlazer.jpg";
-            product6.Category = "Blazer";
+            product6.Category = "Blazers";
             product6.CreateDate = DateTime.Now;
             product6.Stock = 5;
             product6.Size = "M";
@@ -313,7 +313,7 @@ namespace Api.Controllers
             product8.Weight = 50;
             product8.Description = "Med en plånbok från Hugo Boss kommer du inte dra dig från att vara en gentleman och betala notan. Allt för att visa upp denna stilrena, praktiska plånbok med plats för alla dina kort och kontanter.";
             product8.Image = "HugoBossWallet.jpg";
-            product8.Category = "Accessories";
+            product8.Category = "Diverse";
             product8.CreateDate = DateTime.Now;
             product8.Stock = 10;
             product8.Size = null;
