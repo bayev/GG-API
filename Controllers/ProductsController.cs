@@ -623,17 +623,6 @@ namespace Api.Controllers
             az7.Brand = "Daniele Fiesoli";
 
 
-            Product az7 = new Product();
-            az7.Name = "T-Shirt från Stenströms";
-            az7.Price = 999;
-            az7.Weight = 150;
-            az7.Description = "Marinblå t-shirt från Stenströms i linne.";
-            az7.Image = "tshirt4.jpg";
-            az7.Category = "T-Shirt";
-            az7.CreateDate = DateTime.Now;
-            az7.Stock = 12;
-            az7.Size = "One Size";
-            az7.Brand = "Stenströms";
 
 
             Product az8 = new Product();
@@ -648,6 +637,17 @@ namespace Api.Controllers
             az8.Size = "One Size";
             az8.Brand = "Kenzo";
 
+            Product az9 = new Product();
+            az9.Name = "T-Shirt från Stenströms";
+            az9.Price = 999;
+            az9.Weight = 150;
+            az9.Description = "Marinblå t-shirt från Stenströms i linne.";
+            az9.Image = "tshirt4.jpg";
+            az9.Category = "T-Shirt";
+            az9.CreateDate = DateTime.Now;
+            az9.Stock = 12;
+            az9.Size = "One Size";
+            az9.Brand = "Stenströms";
 
             seedList.Add(product10);
             seedList.Add(product1);
@@ -666,10 +666,24 @@ namespace Api.Controllers
             seedList.Add(az6);
             seedList.Add(az7);
             seedList.Add(az8);
+            seedList.Add(az9);
             seedList.Add(tess1);
             seedList.Add(tess2);
             seedList.Add(tess3);
             seedList.Add(tess4);
+            seedList.Add(matte1);
+            seedList.Add(matte2);
+            seedList.Add(matte3);
+            seedList.Add(matte4);
+            seedList.Add(matte5);
+            seedList.Add(matte6);
+            seedList.Add(matte7);
+            seedList.Add(matte8);
+            seedList.Add(product11);
+            seedList.Add(product12);
+            seedList.Add(product13);
+            seedList.Add(product14);
+            seedList.Add(product15);
 
             foreach (var item in seedList)
             {
