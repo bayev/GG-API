@@ -440,6 +440,7 @@ namespace Api.Controllers
             az4.Size = null;
             az4.Brand = "Ralph Lauren";
 
+
             Product tess1 = new Product();
             tess1.Name = "Gant Klocka";
             tess1.Price = 499;
@@ -583,6 +584,7 @@ namespace Api.Controllers
             matte8.Stock = 10;
             matte8.Size = "L";
             matte8.Brand = "Ralph Lauren";
+
 
             seedList.Add(product10);
             seedList.Add(product1);
