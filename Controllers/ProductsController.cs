@@ -392,6 +392,55 @@ namespace Api.Controllers
             product15.Size = "34";
             product15.Brand = "LEVIS 502™";
 
+            Product product16 = new Product();
+            product16.Name = "Slim Fit Chambray Shirt Washed";
+            product16.Price = 1299;
+            product16.Weight = 170;
+            product16.Description = "Chambrayskjorta från Polo Ralph Lauren. Varumärket har blivit en symbol för autenticitet genom en kombination av klassisk engelsk stil och den amerikanska östkustens avslappnade estetik.";
+            product16.Image = "RLshirtBlue.jpg";
+            product16.Category = "Shirts";
+            product16.CreateDate = DateTime.Now;
+            product16.Stock = 10;
+            product16.Size = "L";
+            product16.Brand = "Polo Ralph Lauren";
+
+            Product product17 = new Product();
+            product17.Name = "Custom Fit Striped Linen Shirt Olive/White";
+            product17.Price = 1499;
+            product17.Weight = 150;
+            product17.Description = "Linneskjorta från Polo Ralph Lauren. Varumärket har blivit en symbol för autenticitet genom en kombination av klassisk engelsk stil och den amerikanska östkustens avslappnade estetik.";
+            product17.Image = "RLlightShirt.jpg";
+            product17.Category = "Shirts";
+            product17.CreateDate = DateTime.Now;
+            product17.Stock = 10;
+            product17.Size = "M";
+            product17.Brand = "Polo Ralph Lauren";
+
+            Product product18 = new Product();
+            product18.Name = "Slimline Striped Linen Cut Away Shirt Olive";
+            product18.Price = 1599;
+            product18.Weight = 180;
+            product18.Description = "Linneskjorta från Stenströms. Tillverkad i en tunn och sval linneväv med knappar i pärlemor, idealisk att bära varma vår- och sommardagar till chinos eller shorts.";
+            product18.Image = "StenShirt.jpg";
+            product18.Category = "Shirts";
+            product18.CreateDate = DateTime.Now;
+            product18.Stock = 10;
+            product18.Size = "XL";
+            product18.Brand = "Stenströms";
+
+            Product product19 = new Product();
+            product19.Name = "Slim Fit Oxford Shirt Brimstone Yellow";
+            product19.Price = 999;
+            product19.Weight = 180;
+            product19.Description = "Klassisk oxfordskjorta från GANT. Varumärket är starkt förknippat med amerikansk preppystil och klassiska plagg med influenser hämtade från IVY-League universitet Yale, New Haven.";
+            product19.Image = "RLyellowShirt.jpg";
+            product19.Category = "Shirts";
+            product19.CreateDate = DateTime.Now;
+            product19.Stock = 10;
+            product19.Size = "L";
+            product19.Brand = "GANT";
+
+
             Product az1 = new Product();
             az1.Name = "Blazor från Tommy Hilfiger";
             az1.Price = 2229;
@@ -781,6 +830,10 @@ namespace Api.Controllers
             seedList.Add(product13);
             seedList.Add(product14);
             seedList.Add(product15);
+            seedList.Add(product16);
+            seedList.Add(product17);
+            seedList.Add(product18);
+            seedList.Add(product19);
             seedList.Add(john1);
             seedList.Add(john2);
             seedList.Add(john3);
