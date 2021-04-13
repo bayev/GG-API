@@ -379,6 +379,54 @@ namespace Api.Controllers
             az4.Size = null;
             az4.Brand = "Ralph Lauren";
 
+            Product tess1 = new Product();
+            tess1.Name = "Gant Klocka";
+            tess1.Price = 499;
+            tess1.Weight = 150;
+            tess1.Description = "Denna stilrena klockan från Gant gör din outfit komplett. Med blå urtavla är den klassiskt tidlös.";
+            tess1.Image = "GantKlocka.jpg";
+            tess1.Category = "Accessories";
+            tess1.CreateDate = DateTime.Now;
+            tess1.Stock = 10;
+            tess1.Size = null;
+            tess1.Brand = "Gant";
+
+            Product tess2 = new Product();
+            tess2.Name = "Slipsnål";
+            tess2.Price = 349;
+            tess2.Weight = 80;
+            tess2.Description = "Stilren slipsnål i äkta silver, med svarta detaljer.";
+            tess2.Image = "Slipsnål.jpg";
+            tess2.Category = "Accessories";
+            tess2.CreateDate = DateTime.Now;
+            tess2.Stock = 10;
+            tess2.Size = null;
+            tess2.Brand = "";
+
+            Product tess3 = new Product();
+            tess3.Name = "Läderarmband";
+            tess3.Price = 799;
+            tess3.Weight = 60;
+            tess3.Description = "Stilrent läderarmband med silver-detaljer blir en snygg detalj för den som inte vill bära klocka.";
+            tess3.Image = "ArmbandLäder.jpg";
+            tess3.Category = "Accessories";
+            tess3.CreateDate = DateTime.Now;
+            tess3.Stock = 10;
+            tess3.Size = null;
+            tess3.Brand = "Hugo Boss";
+
+            Product tess4 = new Product();
+            tess4.Name = "RayBan Aviator";
+            tess4.Price = 899;
+            tess4.Weight = 80;
+            tess4.Description = "Klassiska solglasögon från RayBan i Aviator-utförande, ett måste till soliga sommardagar.";
+            tess4.Image = "RayBanAviator.jpg";
+            tess4.Category = "Accessories";
+            tess4.CreateDate = DateTime.Now;
+            tess4.Stock = 10;
+            tess4.Size = null;
+            tess4.Brand = "RayBan";
+
             seedList.Add(product10);
             seedList.Add(product1);
             seedList.Add(product2);
