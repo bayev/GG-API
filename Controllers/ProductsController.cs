@@ -442,48 +442,48 @@ namespace Api.Controllers
 
 
             Product az1 = new Product();
-            az1.Name = "Blazor från Tommy Hilfiger";
+            az1.Name = "Blazer från Tommy Hilfiger";
             az1.Price = 2229;
             az1.Weight = 700;
             az1.Description = "Sharpen up your workwear wardrobe with this tailored double breasted blazer, finished with sleek polished buttons.";
             az1.Image = "TommyGilfinger.jpg";
-            az1.Category = "Blazor";
+            az1.Category = "Blazers";
             az1.CreateDate = DateTime.Now;
             az1.Stock = 10;
             az1.Size = null;
             az1.Brand = "Tommy Hilfiger";
 
             Product az2 = new Product();
-            az2.Name = "Blazor från Filippa K";
+            az2.Name = "Blazer från Filippa K";
             az2.Price = 3699;
             az2.Weight = 800;
             az2.Description = "En vardaglig kavaj i stor passform, inspirerad av det marina i sin blå färg med guldfärgade knappar och diskret dragskomidja för en smickrande siluett.";
             az2.Image = "FilippaK.jpg";
-            az2.Category = "Blazor";
+            az2.Category = "Blazers";
             az2.CreateDate = DateTime.Now;
             az2.Stock = 7;
             az2.Size = null;
             az2.Brand = "Filippa K";
 
             Product az3 = new Product();
-            az3.Name = "Blazor från Oscar Jacobson";
+            az3.Name = "Blazer från Oscar Jacobson";
             az3.Price = 4499;
             az3.Weight = 650;
             az3.Description = "En vardaglig kavaj i stor passform, i sin gröna färg med svarta knappar.";
             az3.Image = "OscarJacobson.jpg";
-            az3.Category = "Blazor";
+            az3.Category = "Blazers";
             az3.CreateDate = DateTime.Now;
             az3.Stock = 13;
             az3.Size = null;
             az3.Brand = "Oscar Jacobson";
 
             Product az4 = new Product();
-            az4.Name = "Blazor från Polo Ralph Lauren";
+            az4.Name = "Blazer från Polo Ralph Lauren";
             az4.Price = 5999;
             az4.Weight = 750;
             az4.Description = "Snygg dubbelknäppt kavaj med guldfärgade knappar från Polo Ralph Lauren Womenswear. Feminin passform med två fickor framtill.";
             az4.Image = "PoloRalp.jpg";
-            az4.Category = "Blazor";
+            az4.Category = "Blazers";
             az4.CreateDate = DateTime.Now;
             az4.Stock = 12;
             az4.Size = null;
@@ -640,7 +640,7 @@ namespace Api.Controllers
             az5.Weight = 200;
             az5.Description = "A two button placket, polo shirt constructed from highly breathable cotton mesh blend which offers a textured look, soft feel and has added stretch for functionality.";
             az5.Image = "tshirtPolo.jpg";
-            az5.Category = "T-Shirt";
+            az5.Category = "T-Shirts";
             az5.CreateDate = DateTime.Now;
             az5.Stock = 12;
             az5.Size = "One Size";
@@ -652,7 +652,7 @@ namespace Api.Controllers
             az6.Weight = 200;
             az6.Description = "En super soft Polo tröja tillverkad i bomull i slim fit.";
             az6.Image = "tshirt2.jpg";
-            az6.Category = "T-Shirt";
+            az6.Category = "T-Shirts";
             az6.CreateDate = DateTime.Now;
             az6.Stock = 12;
             az6.Size = "One Size";
@@ -665,7 +665,7 @@ namespace Api.Controllers
             az7.Weight = 150;
             az7.Description = "En super soft T-shirt tröja tillverkad i bomull i slim fit.";
             az7.Image = "tshirt3.jpg";
-            az7.Category = "T-Shirt";
+            az7.Category = "T-Shirts";
             az7.CreateDate = DateTime.Now;
             az7.Stock = 12;
             az7.Size = "One Size";
@@ -680,7 +680,7 @@ namespace Api.Controllers
             az8.Weight = 150;
             az8.Description = "Marinblå t-shirt från Kenzo i bomull.";
             az8.Image = "tshirt.jpg";
-            az8.Category = "T-Shirt";
+            az8.Category = "T-Shirts";
             az8.CreateDate = DateTime.Now;
             az8.Stock = 12;
             az8.Size = "One Size";
@@ -692,7 +692,7 @@ namespace Api.Controllers
             az9.Weight = 150;
             az9.Description = "Marinblå t-shirt från Stenströms i linne.";
             az9.Image = "tshirt4.jpg";
-            az9.Category = "T-Shirt";
+            az9.Category = "T-Shirts";
             az9.CreateDate = DateTime.Now;
             az9.Stock = 12;
             az9.Size = "One Size";
