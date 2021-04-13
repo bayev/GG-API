@@ -295,6 +295,53 @@ namespace Api.Controllers
             product9.Stock = 10;
             product9.Size = null;
             product9.Brand = "Skultuna";
+            Product az1 = new Product();
+            az1.Name = "Blazor från Tommy Hilfiger";
+            az1.Price = 2229;
+            az1.Weight = 700;
+            az1.Description = "Sharpen up your workwear wardrobe with this tailored double breasted blazer, finished with sleek polished buttons.";
+            az1.Image = "TommyGilfinger.jpg";
+            az1.Category = "Blazer";
+            az1.CreateDate = DateTime.Now;
+            az1.Stock = 10;
+            az1.Size = null;
+            az1.Brand = "Tommy Hilfiger";
+
+            Product az2 = new Product();
+            az2.Name = "Blazor från Filippa K";
+            az2.Price = 3699;
+            az2.Weight = 800;
+            az2.Description = "En vardaglig kavaj i stor passform, inspirerad av det marina i sin blå färg med guldfärgade knappar och diskret dragskomidja för en smickrande siluett.";
+            az2.Image = "FilippaK.jpg";
+            az2.Category = "Blazer";
+            az2.CreateDate = DateTime.Now;
+            az2.Stock = 7;
+            az2.Size = null;
+            az2.Brand = "Filippa K";
+
+            Product az3 = new Product();
+            az3.Name = "Blazor från Oscar Jacobson";
+            az3.Price = 4499;
+            az3.Weight = 650;
+            az3.Description = "En vardaglig kavaj i stor passform, i sin gröna färg med svarta knappar.";
+            az3.Image = "OscarJacobson.jpg";
+            az3.Category = "Blazer";
+            az3.CreateDate = DateTime.Now;
+            az3.Stock = 13;
+            az3.Size = null;
+            az3.Brand = "Oscar Jacobson";
+
+            Product az4 = new Product();
+            az4.Name = "Blazor från Polo Ralph Lauren";
+            az4.Price = 5999;
+            az4.Weight = 750;
+            az4.Description = "Snygg dubbelknäppt kavaj med guldfärgade knappar från Polo Ralph Lauren Womenswear. Feminin passform med två fickor framtill.";
+            az4.Image = "PoloRalp.jpg";
+            az4.Category = "Blazer";
+            az4.CreateDate = DateTime.Now;
+            az4.Stock = 12;
+            az4.Size = null;
+            az4.Brand = "Ralph Lauren";
 
             seedList.Add(product10);
             seedList.Add(product1);
@@ -305,6 +352,10 @@ namespace Api.Controllers
             seedList.Add(product7);
             seedList.Add(product8);
             seedList.Add(product9);
+            seedList.Add(az1);
+            seedList.Add(az2);
+            seedList.Add(az3);
+            seedList.Add(az4);
 
             foreach (var item in seedList)
             {
