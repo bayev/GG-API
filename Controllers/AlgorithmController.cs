@@ -133,7 +133,7 @@ namespace Api.Controllers
             try
             {
                 var categoryResult = _context.Products
-                .Where(x => x.Category.Contains(queryString)).ToList();
+                .Where(x => x.Category == queryString).ToList();
 
                 return Ok(categoryResult);
             }

@@ -222,7 +222,7 @@ namespace Api.Controllers
 
             if (model.NewPassword == model.ConfirmNewPassword)
             {
-                User user = ToolBox.IsValidEmail(model.User) ? await _userManager.FindByEmailAsync(model.User) : await _userManager.FindByNameAsync(model.User);
+                User user = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
 
                 if (user is not null)
                 {
@@ -234,17 +234,17 @@ namespace Api.Controllers
                     }
                     else
                     {
-                        return Ok(new { message = $"Your password is incorrect. ({user.AccessFailedCount}) failed attempts." });
+                        return NotFound(new { message = $"Your password is incorrect. ({user.AccessFailedCount}) failed attempts." });
                     }
                 }
                 else
                 {
-                    return Ok(new { message = "No such user found." });
+                    return BadRequest(new { message = "No such user found." });
                 }
             }
             else
             {
-                return Ok(new { message = "Your password does not match." });
+                return BadRequest(new { message = "Your password does not match." });
             }
         }
 
