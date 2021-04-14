@@ -170,6 +170,20 @@ namespace Api.Controllers
                 {
                     Product product = _context.Products.Where(x => x.Id == productid).FirstOrDefault();
                     _context.Remove(product);
+
+                    var C2Pcheck = _context.CartToProducts
+                        .Where(x => x.ProductId == product.Id);
+ 
+
+                    if (C2Pcheck != null)
+                    {
+                        foreach (var item in C2Pcheck)
+                        {
+                            _context.Remove(item);
+                        }
+                        
+                    }
+                   
                     await _context.SaveChangesAsync();
 
                 }
