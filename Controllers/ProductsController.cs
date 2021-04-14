@@ -313,7 +313,7 @@ namespace Api.Controllers
             product7.Name = "Dolce & Gabbana Chinos";
             product7.Price = 1199;
             product7.Weight = 350;
-            product7.Description = "Säkra stilen med grå-rutiga chinos från [brand] med skön passform och kvalitetsmaterial.";
+            product7.Description = "Säkra stilen med grå-rutiga chinos från Dolce & Gabbana Chinos med skön passform och kvalitetsmaterial.";
             product7.Image = "DolceNgabbanaChinos.jpg";
             product7.Category = "Pants";
             product7.CreateDate = DateTime.Now;
@@ -459,7 +459,7 @@ namespace Api.Controllers
             az1.Name = "Blazer från Tommy Hilfiger";
             az1.Price = 2229;
             az1.Weight = 700;
-            az1.Description = "Sharpen up your workwear wardrobe with this tailored double breasted blazer, finished with sleek polished buttons.";
+            az1.Description = "Den mörkblå blazern är alltid en räddare i nöden när du har beslutsångest över vad du ska ha på dig. Den kombineras snyggt med både jeans och uddabyxor.";
             az1.Image = "TommyGilfinger.jpg";
             az1.Category = "Blazers";
             az1.CreateDate = DateTime.Now;
@@ -652,7 +652,7 @@ namespace Api.Controllers
             az5.Name = "T-Shirt från Polo Ralph Lauren";
             az5.Price = 1495;
             az5.Weight = 200;
-            az5.Description = "A two button placket, polo shirt constructed from highly breathable cotton mesh blend which offers a textured look, soft feel and has added stretch for functionality.";
+            az5.Description = "Polotröja från Ralph Lauren. Hög polokrage och mudd vid ärmslutet. Tröjan har rakt avslut nedtill och passformen är normal. Längd 73 cm i storlek M.";
             az5.Image = "tshirtPolo.jpg";
             az5.Category = "T-Shirts";
             az5.CreateDate = DateTime.Now;
