@@ -16,7 +16,6 @@ namespace Api.Controllers
 
     [Route("[controller]")]
     [ApiController]
-    // Give it the [Authorize] attribute. It will bypass the autentication without it.  
     [Authorize]
     public class UserController : ControllerBase
     {
@@ -33,18 +32,11 @@ namespace Api.Controllers
         [HttpGet("profile/{id}")]
         public async Task<ActionResult> GetProfile(string Id)
         {
-
-            //User user1 = await _userManager.FindByNameAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
-            //User user2 = await _userManager.FindByEmailAsync(User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name)).Value);
             User user = await _userManager.FindByIdAsync(Id);
-
-            //User user = user1 == null ? user2 : user1;
 
             if (user != null)
             {
                 return Ok(user);
-                //Ok(new { result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault() });
-
             }
             else
             {
@@ -66,8 +58,6 @@ namespace Api.Controllers
                 _context.SaveChanges();
 
                 return Ok(gdpr.UseMyData);
-
-                //return Ok(new { message = $"GDPR has been toggled to {user.GDPR.UseMyData}" });
             }
             else
             {
@@ -139,8 +129,6 @@ namespace Api.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-
-                    // Add your claims to the JWT token
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                             new Claim(ClaimTypes.Name, model.Username),

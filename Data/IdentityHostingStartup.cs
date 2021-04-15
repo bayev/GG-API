@@ -19,7 +19,6 @@ namespace Api.Data
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("sqlConnection")));
 
-                // Required confirm email should be on. But its off for simplicity
                 services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<Context>();

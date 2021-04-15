@@ -16,7 +16,7 @@ namespace Api.Services
             Options = optionsAccessor.Value;
         }
 
-        public AuthMessageSenderOptions Options { get; } //Ska egentligen bli set via secrets
+        public AuthMessageSenderOptions Options { get; } 
 
         public Task SendEmailAsync(string email, string subject, string message)
         {

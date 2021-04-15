@@ -80,7 +80,6 @@ namespace Api.Controllers
                     product.Price = Convert.ToDecimal(model.Price);
                     product.Weight = model.Weight;
                     product.Description = model.Description;
-                    // upload image the proper way
                     product.Image = model.Image;
                     product.Category = model.Category;
                     product.Stock = model.Stock;
@@ -131,8 +130,6 @@ namespace Api.Controllers
                 product.Price = Convert.ToDecimal(model.Price);
                 product.Weight = model.Weight;
                 product.Description = model.Description;
-
-                // upload image the proper way
                 product.Image = model.Image;
                 product.Category = model.Category;
                 product.Stock = model.Stock;
@@ -200,7 +197,7 @@ namespace Api.Controllers
             }
         }
         [AllowAnonymous]
-        [HttpGet("GGProducts")] //EXPOSED METHOD FOR OUR PRODUCTS TO BE DISPLAYED
+        [HttpGet("GGProducts")]
         public async Task<ActionResult> GGProducts()
         {
 
@@ -233,7 +230,7 @@ namespace Api.Controllers
 
         }
         [HttpPost("seed")]
-        public async void SeedDB() //ANVÄND POSTMAN FÖR ATT SEEDA DB. Method POST, använd TOKEN /products/seed
+        public async void SeedDB()
         {
             List<Product> seedList = new List<Product>();
 

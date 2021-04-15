@@ -17,7 +17,7 @@ namespace Api.Controllers
             _context = context;
         }
 
-        [HttpGet("search/{queryString}")] //querystring istället för all 
+        [HttpGet("search/{queryString}")]
         public async Task<ActionResult> SearchProductResult([FromRoute] string queryString)
         {
             try

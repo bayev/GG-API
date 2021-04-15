@@ -18,7 +18,6 @@ namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    // Give it the [Authorize] attribute. It will bypass the autentication without it.  
     [Authorize]
     public class AuthController : ControllerBase
     {
@@ -36,7 +35,6 @@ namespace Api.Controllers
             _sender = sender;
         }
 
-        // Use [AllowAnonymous] for methods anyone can use, Such as login and register. 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginModel model)
@@ -106,9 +104,6 @@ namespace Api.Controllers
                 PhoneNumberConfirmed = false,
                 MailToken = null,
                 EmailConfirmed = false,
-                // Its always best practice to have some form of verification. this is off for simplicity
-                // Set your customs
-                //MyProperty = 13
             };
             if(newUser.UserName.Contains(' '))
             {
@@ -131,8 +126,6 @@ namespace Api.Controllers
 
                     await _userManager.AddToRoleAsync(newUser, "User");
 
-                    // Remember to set your custom data and relationships here
-
                     UserSettings settings = new UserSettings()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -147,8 +140,6 @@ namespace Api.Controllers
                         User = user
                     };
                     
-
-                    // Add it to the context
                     _context.UserSettings.Add(settings);
                     _context.UserGDPR.Add(gdpr);
 
@@ -290,11 +281,8 @@ namespace Api.Controllers
                         User = user
                     };
 
-                    // Add it to the context
                     _context.UserSettings.Add(settings);
                     _context.UserGDPR.Add(gdpr);
-
-                    // Save the data
                     _context.SaveChanges();
 
                     return Ok();
@@ -313,7 +301,6 @@ namespace Api.Controllers
                     errorString.Append(error.Description);
                 }
                 return NotFound();
-                //return Ok(new { result = $"Register Fail: {errorString.ToString()}" });
             }
 
         }

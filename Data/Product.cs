@@ -28,9 +28,6 @@ namespace Api.Data
             Name = String.Empty;
             CreateDate = DateTime.Now;
         }
-
-        //public IList<ProductCategory> ProductCategories { get; set; }
-        //public IList<CartToProduct> CartToProducts { get; set; }
     }
 
 

@@ -152,7 +152,7 @@ namespace Api.Controllers
 
                 if (c2p != null && product != null)
                 {
-                    product.Stock += c2p.Amount; //Tar bort samtliga produkter 
+                    product.Stock += c2p.Amount; 
 
                     _context.Remove(c2p);
                     await _context.SaveChangesAsync();
@@ -181,9 +181,7 @@ namespace Api.Controllers
 
             CartToProduct c2p = _context.CartToProducts.Where(x => x.Id == c2pIdUpdate).FirstOrDefault();
             Product product = _context.Products.Where(x => x.Id == c2p.ProductId).FirstOrDefault();
-
-      
-            //Vill lägga till
+   
             if (input && product.Stock > 0)
             {
                 c2p.Amount += 1;
@@ -191,7 +189,7 @@ namespace Api.Controllers
                 await _context.SaveChangesAsync();
                 return Ok("Increased");
             }
-            //Ta bort en produkt eller hela CartToProduct(C2P).
+
             else if(!input)
             {
                 if (c2p.Amount == 1)

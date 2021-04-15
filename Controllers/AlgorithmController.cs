@@ -127,8 +127,8 @@ namespace Api.Controllers
             }
         }
         
-        [HttpGet("category/{queryString}")] //querystring istället för all 
-        public async Task<ActionResult> SearchProductResult([FromRoute] string queryString)
+        [HttpGet("category/{queryString}")] 
+        public async Task<ActionResult> CategoryResult([FromRoute] string queryString)
         {
             try
             {
@@ -150,8 +150,8 @@ namespace Api.Controllers
                
             if(SelectedProducts.Count >= 3)
             {
-                var threeAmigos = SelectedProducts.Take(3);
-                return Ok(threeAmigos);
+                var products = SelectedProducts.Take(3);
+                return Ok(products);
             }
             else
             {

@@ -28,19 +28,14 @@ namespace Api
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            // you should get this key from secret place instead. A config file should be enough. 
             var key = Encoding.ASCII.GetBytes(Configuration["defaults:SignatureKey"]);
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            // add and setup the authenticaion with jwt bearer default. As well as storing the key
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -92,7 +87,6 @@ namespace Api
 
             });
 
-            // Configure the passwords requirements
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -101,7 +95,7 @@ namespace Api
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-                options.SignIn.RequireConfirmedAccount = true; //DETTA
+                options.SignIn.RequireConfirmedAccount = true; 
             });
 
             services.AddControllers();
@@ -109,8 +103,8 @@ namespace Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
             });
-            services.AddTransient<IEmailSender, EmailSender>();  //DETTA
-            services.Configure<AuthMessageSenderOptions>(Configuration); //DETTA
+            services.AddTransient<IEmailSender, EmailSender>();  
+            services.Configure<AuthMessageSenderOptions>(Configuration); 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Context context)
@@ -127,7 +121,6 @@ namespace Api
 
             app.UseRouting();
 
-            // We need to authenticate before we authorize
             app.UseAuthentication();
 
             app.UseAuthorization();

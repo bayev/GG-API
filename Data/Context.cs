@@ -14,14 +14,10 @@ namespace Api.Data
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<UserGDPR> UserGDPR { get; set; }
         public DbSet<Product> Products { get; set; }
-
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        //public DbSet<Address> Addresses { get; set; }
         public DbSet<CartToProduct> CartToProducts { get; set; }
 
 
@@ -65,16 +61,7 @@ namespace Api.Data
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "AdminPass1!"),
                 SecurityStamp = Guid.NewGuid().ToString(),
-                // MyProperty = 13
             });
-
-
-
-
-            /// seed dummy product data
-
-
-
 
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
