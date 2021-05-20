@@ -314,17 +314,17 @@ namespace Api.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "96f14999-665f-4a9f-a14e-c41290c75609", "root", "ROOT" });
+                values: new object[] { "root-0c0-aa65-4af8-bd17-00bd9344e575", "2bc3dae0-5ba6-41cb-8176-3b971db2e3f6", "root", "ROOT" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "a934f091-e724-40d9-9dbb-2937712d291c", "User", "USER" });
+                values: new object[] { "user-2c0-aa65-4af8-bd17-00bd9344e575", "dd67045d-9a72-4920-882d-dbd118157479", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "BillingAdress", "ConcurrencyStamp", "Country", "DefaultShippingAddress", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "MailToken", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, null, "d9369a30-a8c5-4641-88cd-ff316f16fe87", null, null, "admin@core.api", true, null, false, null, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAEOwkNjVOdR5p40H219O77umYgOmJ/d3tJ+ttQRsBo0KxokjC+58gZcla6mlb+yhiOg==", null, false, "41e147d1-718d-44b5-a976-b68d4b4374f0", false, "admin" });
+                values: new object[] { "admin-c0-aa65-4af8-bd17-00bd9344e575", 0, null, "37dd6f88-8c21-4c30-bf71-cb1d6a61c03e", null, null, "admin@core.api", true, null, false, null, null, "ADMIN@CORE.API", "ADMIN", "AQAAAAEAACcQAAAAENac4KL0jp9dyE5akVEemsQODVSQMXm4pRUkq4QI6vs+Kt1Zp787AZCc58ZDVXsrlQ==", null, false, "595bd722-bd87-440b-b51c-4a5c86185a56", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
